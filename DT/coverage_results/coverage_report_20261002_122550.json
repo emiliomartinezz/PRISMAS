@@ -1,0 +1,1013 @@
+{
+  "timestamp": "2026-10-02T12:29:56.826982",
+  "session": "20261002_122550",
+  "optimizer": "Centroide simple",
+  "simulation_time": {
+    "start": 41.0,
+    "current": 594.0,
+    "elapsed": 553.0
+  },
+  "ues": {
+    "count": 9,
+    "total_measurements": 587,
+    "details": {
+      "2049": {
+        "ue_index": 6,
+        "position": [
+          1284.869,
+          907.702,
+          0.0
+        ],
+        "current_sinr": 38.226,
+        "avg_sinr": 24.309756410256416,
+        "master_id": 1,
+        "total_measurements": 78
+      },
+      "2050": {
+        "ue_index": 7,
+        "position": [
+          538.76,
+          675.77,
+          0.0
+        ],
+        "current_sinr": 30.973,
+        "avg_sinr": 23.8145,
+        "master_id": 2,
+        "total_measurements": 6
+      },
+      "2051": {
+        "ue_index": 8,
+        "position": [
+          1391.41,
+          744.651,
+          0.0
+        ],
+        "current_sinr": 38.93,
+        "avg_sinr": 29.05926,
+        "master_id": 1,
+        "total_measurements": 100
+      },
+      "2052": {
+        "ue_index": 9,
+        "position": [
+          1274.143,
+          583.281,
+          0.0
+        ],
+        "current_sinr": 15.991,
+        "avg_sinr": 24.85976923076923,
+        "master_id": 1,
+        "total_measurements": 52
+      },
+      "2053": {
+        "ue_index": 10,
+        "position": [
+          1280.192,
+          658.648,
+          0.0
+        ],
+        "current_sinr": 25.176,
+        "avg_sinr": 28.29261016949153,
+        "master_id": 1,
+        "total_measurements": 59
+      },
+      "2054": {
+        "ue_index": 11,
+        "position": [
+          1269.553,
+          592.536,
+          0.0
+        ],
+        "current_sinr": 34.373,
+        "avg_sinr": 29.267821428571427,
+        "master_id": 1,
+        "total_measurements": 28
+      },
+      "2056": {
+        "ue_index": 13,
+        "position": [
+          1196.765,
+          806.245,
+          0.0
+        ],
+        "current_sinr": 39.309,
+        "avg_sinr": 37.5230843373494,
+        "master_id": 1,
+        "total_measurements": 166
+      },
+      "2057": {
+        "ue_index": 14,
+        "position": [
+          1196.947,
+          772.434,
+          0.0
+        ],
+        "current_sinr": 27.119,
+        "avg_sinr": 21.683844827586206,
+        "master_id": 1,
+        "total_measurements": 58
+      },
+      "2058": {
+        "ue_index": 15,
+        "position": [
+          587.472,
+          702.598,
+          0.0
+        ],
+        "current_sinr": 31.354,
+        "avg_sinr": 18.524575000000002,
+        "master_id": 2,
+        "total_measurements": 40
+      }
+    }
+  },
+  "gnbs": {
+    "1": {
+      "index": 0,
+      "position": [
+        1198.245,
+        788.083,
+        80.0
+      ],
+      "connected_ues": [
+        2056
+      ],
+      "num_connected": 1,
+      "total_records": 594
+    },
+    "2": {
+      "index": 1,
+      "position": [
+        587.472,
+        702.598,
+        80.0
+      ],
+      "connected_ues": [],
+      "num_connected": 0,
+      "total_records": 594
+    },
+    "3": {
+      "index": 2,
+      "position": [
+        1159.081,
+        924.149,
+        80.0
+      ],
+      "connected_ues": [],
+      "num_connected": 0,
+      "total_records": 594
+    },
+    "4": {
+      "index": 3,
+      "position": [
+        1470.25,
+        1081.07,
+        0.0
+      ],
+      "connected_ues": [],
+      "num_connected": 0,
+      "total_records": 594
+    },
+    "5": {
+      "index": 4,
+      "position": [
+        1063.418,
+        940.066,
+        36.06
+      ],
+      "connected_ues": [],
+      "num_connected": 0,
+      "total_records": 594
+    },
+    "6": {
+      "index": 5,
+      "position": [
+        1154.35,
+        974.19,
+        80.0
+      ],
+      "connected_ues": [],
+      "num_connected": 0,
+      "total_records": 594
+    }
+  },
+  "coverage": {
+    "total_cells": 195,
+    "covered_cells": 19,
+    "uncovered_cells": 176,
+    "coverage_percentage": 9.743589743589745,
+    "measured_cells": 27,
+    "unmeasured_cells": 168,
+    "measurement_percentage": 13.846153846153847,
+    "avg_sinr_measured": 27.083855623499705,
+    "min_sinr_measured": -2.94,
+    "max_sinr_measured": 41.81553886809198,
+    "total_measurements": 587,
+    "gnb_distribution": {
+      "1": {
+        "cells": 14,
+        "percentage": 51.85185185185185
+      },
+      "2": {
+        "cells": 7,
+        "percentage": 25.925925925925924
+      },
+      "3": {
+        "cells": 6,
+        "percentage": 22.22222222222222
+      }
+    },
+    "last_update": 594.0
+  },
+  "qos": {
+    "Excellent": {
+      "cells": 19,
+      "percentage": 70.37037037037037
+    },
+    "Good": {
+      "cells": 4,
+      "percentage": 14.814814814814813
+    },
+    "Fair": {
+      "cells": 3,
+      "percentage": 11.11111111111111
+    },
+    "Poor": {
+      "cells": 1,
+      "percentage": 3.7037037037037033
+    },
+    "No Service": {
+      "cells": 0,
+      "percentage": 0.0
+    }
+  },
+  "coverage_holes": {
+    "total_holes": 2,
+    "total_cells_affected": 13,
+    "total_area_m2": 130000.0,
+    "by_severity": {
+      "severe": {
+        "count": 1,
+        "cells": 8,
+        "area_m2": 80000.0
+      },
+      "moderate": {
+        "count": 1,
+        "cells": 5,
+        "area_m2": 50000.0
+      }
+    },
+    "regions": [
+      {
+        "id": "region_1",
+        "type": "cluster",
+        "center": {
+          "x": 950.0,
+          "y": 950.0
+        },
+        "area_m2": 80000.0,
+        "num_cells": 8,
+        "avg_sinr": 14.380907487297005,
+        "min_sinr": -2.94,
+        "severity": "severe",
+        "severity_score": 3,
+        "measured_ratio": 0.625,
+        "bounding_box": {
+          "x_min": 800.0,
+          "x_max": 1100.0,
+          "y_min": 700.0,
+          "y_max": 1100.0
+        }
+      },
+      {
+        "id": "region_0",
+        "type": "cluster",
+        "center": {
+          "x": 450.0,
+          "y": 770.0
+        },
+        "area_m2": 50000.0,
+        "num_cells": 5,
+        "avg_sinr": 18.35404256772687,
+        "min_sinr": 12.611605739999996,
+        "severity": "moderate",
+        "severity_score": 2,
+        "measured_ratio": 0.6,
+        "bounding_box": {
+          "x_min": 300.0,
+          "x_max": 600.0,
+          "y_min": 600.0,
+          "y_max": 900.0
+        }
+      }
+    ],
+    "detection_time": 594.0
+  },
+  "move_commands": [
+    {
+      "wall_time": 1790936822.3296745,
+      "sim_time": 41.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1182.0,
+        "y": 682.0,
+        "z": 0.0,
+        "speed": 20.0
+      },
+      "distance": 492.285412540327,
+      "eta": 24.61427062701635,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936822.4668314,
+      "sim_time": 51.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1107.933,
+        "y": 718.611,
+        "z": 13.33,
+        "speed": 20.0
+      },
+      "distance": 445.12352287089925,
+      "eta": 22.256176143544963,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936822.6124504,
+      "sim_time": 61.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1055.907,
+        "y": 801.193,
+        "z": 32.74,
+        "speed": 20.0
+      },
+      "distance": 317.36019846225213,
+      "eta": 15.868009923112606,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936822.8274581,
+      "sim_time": 71.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1045.559,
+        "y": 854.87,
+        "z": 49.93,
+        "speed": 20.0
+      },
+      "distance": 202.8400577425475,
+      "eta": 10.142002887127374,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936823.292605,
+      "sim_time": 91.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1144.051,
+        "y": 859.113,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 98.58335109439115,
+      "eta": 4.929167554719557,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936823.487858,
+      "sim_time": 101.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1192.849,
+        "y": 873.635,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 148.48053517212279,
+      "eta": 7.424026758606139,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936823.691514,
+      "sim_time": 111.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1245.943,
+        "y": 893.643,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 115.3397602563834,
+      "eta": 5.76698801281917,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936824.251678,
+      "sim_time": 133.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 561.0,
+        "y": 685.0,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 188.77349218838964,
+      "eta": 9.438674609419483,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936824.618703,
+      "sim_time": 162.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 948.0,
+        "y": 1047.0,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 335.0946145463994,
+      "eta": 16.75473072731997,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936824.873575,
+      "sim_time": 172.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 955.115,
+        "y": 987.842,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 305.703086646177,
+      "eta": 15.28515433230885,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936825.1775515,
+      "sim_time": 182.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 968.237,
+        "y": 923.12,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 185.17066162057094,
+      "eta": 9.258533081028547,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936825.3231428,
+      "sim_time": 192.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1017.804,
+        "y": 874.907,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 56.99583712868862,
+      "eta": 2.849791856434431,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936825.5425696,
+      "sim_time": 202.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1079.403,
+        "y": 856.391,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 84.04372481631216,
+      "eta": 4.2021862408156085,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936825.7221243,
+      "sim_time": 212.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1148.156,
+        "y": 859.349,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 84.16958862914802,
+      "eta": 4.208479431457401,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936825.911107,
+      "sim_time": 222.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1204.457,
+        "y": 867.83,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 56.936192022298236,
+      "eta": 2.846809601114912,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936826.2838848,
+      "sim_time": 232.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1199.689,
+        "y": 767.052,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 100.89072855322239,
+      "eta": 5.04453642766112,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936826.4244225,
+      "sim_time": 242.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1260.903,
+        "y": 753.004,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 92.47992401597226,
+      "eta": 4.623996200798613,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936826.5539594,
+      "sim_time": 252.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1329.205,
+        "y": 746.155,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 81.73908412136748,
+      "eta": 4.086954206068374,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936826.8331723,
+      "sim_time": 271.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1193.0,
+        "y": 709.0,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 141.18178370455578,
+      "eta": 7.059089185227789,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936827.1850696,
+      "sim_time": 281.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1113.8870000000002,
+        "y": 772.4545,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 216.9181984625769,
+      "eta": 10.845909923128845,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936827.42147,
+      "sim_time": 291.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1101.739,
+        "y": 747.3130000000001,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 113.63451430353375,
+      "eta": 5.681725715176688,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936827.6940694,
+      "sim_time": 301.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1140.0304999999998,
+        "y": 714.3915,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 50.498159713993424,
+      "eta": 2.524907985699671,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936827.9323025,
+      "sim_time": 311.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1227.549,
+        "y": 725.3430000000001,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 127.71388726368006,
+      "eta": 6.385694363184003,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936828.4098048,
+      "sim_time": 321.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1190.7066666666667,
+        "y": 619.9556666666666,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 116.72032525895204,
+      "eta": 5.836016262947602,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936828.7481992,
+      "sim_time": 331.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1245.7235,
+        "y": 629.5245,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 87.67308472102495,
+      "eta": 4.383654236051248,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936840.0708973,
+      "sim_time": 429.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1259.0,
+        "y": 909.0,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 183.66613024725052,
+      "eta": 9.183306512362526,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936844.9426932,
+      "sim_time": 439.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 876.991,
+        "y": 1007.378,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 451.4176413976308,
+      "eta": 22.57088206988154,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936844.9426956,
+      "sim_time": 439.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1257.064,
+        "y": 930.63,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 196.55295519528565,
+      "eta": 9.827647759764282,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936851.6870193,
+      "sim_time": 449.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 926.207,
+        "y": 959.812,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 459.54464008733686,
+      "eta": 22.977232004366844,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936851.6870215,
+      "sim_time": 449.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1253.088,
+        "y": 959.813,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 92.66518424953358,
+      "eta": 4.633259212476679,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936858.4228783,
+      "sim_time": 459.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1117.7635,
+        "y": 945.9490000000001,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 136.03282984724672,
+      "eta": 6.801641492362336,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936864.8307457,
+      "sim_time": 469.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1056.645,
+        "y": 855.581,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 169.94520389819786,
+      "eta": 8.497260194909893,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936864.8307476,
+      "sim_time": 469.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1246.742,
+        "y": 1006.403,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 87.66835700525026,
+      "eta": 4.3834178502625125,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936871.7709193,
+      "sim_time": 479.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1140.468,
+        "y": 858.908,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 70.28352457012966,
+      "eta": 3.514176228506483,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936871.7709215,
+      "sim_time": 479.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1233.869,
+        "y": 1026.463,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 115.74777137379355,
+      "eta": 5.7873885686896775,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936884.7596471,
+      "sim_time": 499.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1196.947,
+        "y": 772.434,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 103.28422007741544,
+      "eta": 5.164211003870772,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936884.7596495,
+      "sim_time": 499.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1186.746,
+        "y": 1045.331,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 50.76000938731179,
+      "eta": 2.5380004693655893,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936889.719343,
+      "sim_time": 509.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1163.13,
+        "y": 1051.836,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 75.15181468201533,
+      "eta": 3.7575907341007664,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936895.5332117,
+      "sim_time": 519.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 442.717,
+        "y": 813.308,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 475.6648735990498,
+      "eta": 23.78324367995249,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936902.7467718,
+      "sim_time": 529.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 451.998,
+        "y": 784.319,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 382.2869729208674,
+      "eta": 19.11434864604337,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936902.746774,
+      "sim_time": 529.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1151.807,
+        "y": 1001.097,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 51.98707964485027,
+      "eta": 2.5993539822425134,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936909.8453078,
+      "sim_time": 539.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 465.932,
+        "y": 750.405,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 261.9521820676438,
+      "eta": 13.097609103382188,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936909.8453104,
+      "sim_time": 539.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1154.35,
+        "y": 974.19,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 60.938963931133536,
+      "eta": 3.0469481965566767,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936917.1313097,
+      "sim_time": 549.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 526.215,
+        "y": 675.341,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 161.89941245415312,
+      "eta": 8.094970622707656,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936924.0115297,
+      "sim_time": 559.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 1,
+        "x": 587.472,
+        "y": 702.598,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 65.92857181071038,
+      "eta": 3.296428590535519,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936924.0115318,
+      "sim_time": 559.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 2,
+        "x": 1159.081,
+        "y": 924.149,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 50.264142706307105,
+      "eta": 2.5132071353153553,
+      "reason": "topology_optimization"
+    },
+    {
+      "wall_time": 1790936939.8713355,
+      "sim_time": 589.0,
+      "command": {
+        "type": "MOVE",
+        "gnb_index": 0,
+        "x": 1204.735,
+        "y": 866.33,
+        "z": 80.0,
+        "speed": 20.0
+      },
+      "distance": 94.21842579877894,
+      "eta": 4.7109212899389465,
+      "reason": "topology_optimization"
+    }
+  ]
+}

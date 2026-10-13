@@ -1,0 +1,2392 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d24" for="edge" attr.name="qos" attr.type="string" />
+  <key id="d23" for="edge" attr.name="sinr" attr.type="double" />
+  <key id="d22" for="edge" attr.name="distance" attr.type="double" />
+  <key id="d21" for="edge" attr.name="link_type" attr.type="string" />
+  <key id="d20" for="node" attr.name="measurements" attr.type="long" />
+  <key id="d19" for="node" attr.name="handovers" attr.type="long" />
+  <key id="d18" for="node" attr.name="dist_to_gnb" attr.type="double" />
+  <key id="d17" for="node" attr.name="master_id" attr.type="long" />
+  <key id="d16" for="node" attr.name="qos" attr.type="string" />
+  <key id="d15" for="node" attr.name="max_sinr" attr.type="double" />
+  <key id="d14" for="node" attr.name="min_sinr" attr.type="double" />
+  <key id="d13" for="node" attr.name="avg_sinr" attr.type="double" />
+  <key id="d12" for="node" attr.name="sinr" attr.type="double" />
+  <key id="d11" for="node" attr.name="ue_index" attr.type="long" />
+  <key id="d10" for="node" attr.name="ue_id" attr.type="long" />
+  <key id="d9" for="node" attr.name="last_update" attr.type="double" />
+  <key id="d8" for="node" attr.name="total_reports" attr.type="long" />
+  <key id="d7" for="node" attr.name="connected_ues_str" attr.type="string" />
+  <key id="d6" for="node" attr.name="num_connected" attr.type="long" />
+  <key id="d5" for="node" attr.name="pos_z" attr.type="double" />
+  <key id="d4" for="node" attr.name="pos_y" attr.type="double" />
+  <key id="d3" for="node" attr.name="pos_x" attr.type="double" />
+  <key id="d2" for="node" attr.name="gnb_index" attr.type="long" />
+  <key id="d1" for="node" attr.name="gnb_id" attr.type="long" />
+  <key id="d0" for="node" attr.name="node_type" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="gNB_1">
+      <data key="d0">gnb</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">1310.47</data>
+      <data key="d4">1039.07</data>
+      <data key="d5">13.02</data>
+      <data key="d6">0</data>
+      <data key="d7">[]</data>
+      <data key="d8">471</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="gNB_2">
+      <data key="d0">gnb</data>
+      <data key="d1">2</data>
+      <data key="d2">1</data>
+      <data key="d3">1184.62</data>
+      <data key="d4">1053.33</data>
+      <data key="d5">16.41</data>
+      <data key="d6">23</data>
+      <data key="d7">[1058, 1059, 1061, 1068, 1070, 1071, 1075, 1077, 1078, 1080, 1084, 1085, 1086, 1087, 1088, 1089, 1091, 1092, 1093, 1094, 1095, 1096, 1097]</data>
+      <data key="d8">471</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1000">
+      <data key="d0">ue</data>
+      <data key="d10">1000</data>
+      <data key="d11">1000</data>
+      <data key="d3">1045.26</data>
+      <data key="d4">808.61</data>
+      <data key="d5">1.5</data>
+      <data key="d12">-1000000000.0</data>
+      <data key="d13">-999.0</data>
+      <data key="d14">-999.0</data>
+      <data key="d15">-999.0</data>
+      <data key="d16">No Service</data>
+      <data key="d17">-1</data>
+      <data key="d18">-1.0</data>
+      <data key="d19">0</data>
+      <data key="d20">44</data>
+      <data key="d9">45.0</data>
+    </node>
+    <node id="UE_1001">
+      <data key="d0">ue</data>
+      <data key="d10">1001</data>
+      <data key="d11">1001</data>
+      <data key="d3">275.83</data>
+      <data key="d4">791.29</data>
+      <data key="d5">1.5</data>
+      <data key="d12">-1000000000.0</data>
+      <data key="d13">-999.0</data>
+      <data key="d14">-999.0</data>
+      <data key="d15">-999.0</data>
+      <data key="d16">No Service</data>
+      <data key="d17">-1</data>
+      <data key="d18">-1.0</data>
+      <data key="d19">0</data>
+      <data key="d20">33</data>
+      <data key="d9">43.0</data>
+    </node>
+    <node id="UE_1002">
+      <data key="d0">ue</data>
+      <data key="d10">1002</data>
+      <data key="d11">1002</data>
+      <data key="d3">628.29</data>
+      <data key="d4">773.29</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.96</data>
+      <data key="d13">17.414285714285715</data>
+      <data key="d14">16.88</data>
+      <data key="d15">17.96</data>
+      <data key="d16">Good</data>
+      <data key="d17">1</data>
+      <data key="d18">742.0831091596143</data>
+      <data key="d19">1</data>
+      <data key="d20">48</data>
+      <data key="d9">61.0</data>
+    </node>
+    <node id="UE_1003">
+      <data key="d0">ue</data>
+      <data key="d10">1003</data>
+      <data key="d11">1003</data>
+      <data key="d3">838.01</data>
+      <data key="d4">719.43</data>
+      <data key="d5">1.5</data>
+      <data key="d12">-1000000000.0</data>
+      <data key="d13">-999.0</data>
+      <data key="d14">-999.0</data>
+      <data key="d15">-999.0</data>
+      <data key="d16">No Service</data>
+      <data key="d17">-1</data>
+      <data key="d18">-1.0</data>
+      <data key="d19">0</data>
+      <data key="d20">11</data>
+      <data key="d9">36.0</data>
+    </node>
+    <node id="UE_1004">
+      <data key="d0">ue</data>
+      <data key="d10">1004</data>
+      <data key="d11">1004</data>
+      <data key="d3">954.7</data>
+      <data key="d4">595.26</data>
+      <data key="d5">1.5</data>
+      <data key="d12">31.95</data>
+      <data key="d13">27.0295652173913</data>
+      <data key="d14">20.81</data>
+      <data key="d15">32.22</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">512.5342245157876</data>
+      <data key="d19">2</data>
+      <data key="d20">48</data>
+      <data key="d9">77.0</data>
+    </node>
+    <node id="UE_1005">
+      <data key="d0">ue</data>
+      <data key="d10">1005</data>
+      <data key="d11">1005</data>
+      <data key="d3">1040.46</data>
+      <data key="d4">552.25</data>
+      <data key="d5">1.5</data>
+      <data key="d12">35.31</data>
+      <data key="d13">29.427627118644054</data>
+      <data key="d14">20.45</data>
+      <data key="d15">35.31</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">521.4050939528687</data>
+      <data key="d19">2</data>
+      <data key="d20">75</data>
+      <data key="d9">113.0</data>
+    </node>
+    <node id="UE_1006">
+      <data key="d0">ue</data>
+      <data key="d10">1006</data>
+      <data key="d11">1006</data>
+      <data key="d3">953.98</data>
+      <data key="d4">592.2</data>
+      <data key="d5">1.5</data>
+      <data key="d12">32.12</data>
+      <data key="d13">26.64309523809524</data>
+      <data key="d14">20.69</data>
+      <data key="d15">32.19</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">515.5925586158123</data>
+      <data key="d19">2</data>
+      <data key="d20">45</data>
+      <data key="d9">96.0</data>
+    </node>
+    <node id="UE_1007">
+      <data key="d0">ue</data>
+      <data key="d10">1007</data>
+      <data key="d11">1007</data>
+      <data key="d3">699.36</data>
+      <data key="d4">422.8</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.52</data>
+      <data key="d13">30.214252336448624</data>
+      <data key="d14">24.2</data>
+      <data key="d15">37.14</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">795.6414698216778</data>
+      <data key="d19">1</data>
+      <data key="d20">214</data>
+      <data key="d9">270.0</data>
+    </node>
+    <node id="UE_1008">
+      <data key="d0">ue</data>
+      <data key="d10">1008</data>
+      <data key="d11">1008</data>
+      <data key="d3">282.53</data>
+      <data key="d4">784.63</data>
+      <data key="d5">1.5</data>
+      <data key="d12">15.05</data>
+      <data key="d13">13.74076923076923</data>
+      <data key="d14">12.77</data>
+      <data key="d15">15.05</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">953.2329407862487</data>
+      <data key="d19">1</data>
+      <data key="d20">13</data>
+      <data key="d9">71.0</data>
+    </node>
+    <node id="UE_1009">
+      <data key="d0">ue</data>
+      <data key="d10">1009</data>
+      <data key="d11">1009</data>
+      <data key="d3">508.82</data>
+      <data key="d4">720.97</data>
+      <data key="d5">1.5</data>
+      <data key="d12">18.71</data>
+      <data key="d13">23.126431226765792</data>
+      <data key="d14">18.51</data>
+      <data key="d15">32.2</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">753.1061077962387</data>
+      <data key="d19">0</data>
+      <data key="d20">269</data>
+      <data key="d9">333.0</data>
+    </node>
+    <node id="UE_1010">
+      <data key="d0">ue</data>
+      <data key="d10">1010</data>
+      <data key="d11">1010</data>
+      <data key="d3">817.6</data>
+      <data key="d4">380.56</data>
+      <data key="d5">1.5</data>
+      <data key="d12">30.4</data>
+      <data key="d13">34.600090090090085</data>
+      <data key="d14">24.2</data>
+      <data key="d15">55.34</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">766.3701150880036</data>
+      <data key="d19">0</data>
+      <data key="d20">222</data>
+      <data key="d9">289.0</data>
+    </node>
+    <node id="UE_1011">
+      <data key="d0">ue</data>
+      <data key="d10">1011</data>
+      <data key="d11">1011</data>
+      <data key="d3">699.36</data>
+      <data key="d4">422.82</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.52</data>
+      <data key="d13">26.161057692307672</data>
+      <data key="d14">24.08</data>
+      <data key="d15">29.42</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">795.6256203139765</data>
+      <data key="d19">0</data>
+      <data key="d20">104</data>
+      <data key="d9">174.0</data>
+    </node>
+    <node id="UE_1012">
+      <data key="d0">ue</data>
+      <data key="d10">1012</data>
+      <data key="d11">1012</data>
+      <data key="d3">699.29</data>
+      <data key="d4">412.68</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.5</data>
+      <data key="d13">26.129369369369346</data>
+      <data key="d14">24.21</data>
+      <data key="d15">29.42</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">803.7273364767431</data>
+      <data key="d19">0</data>
+      <data key="d20">111</data>
+      <data key="d9">184.0</data>
+    </node>
+    <node id="UE_1013">
+      <data key="d0">ue</data>
+      <data key="d10">1013</data>
+      <data key="d11">1013</data>
+      <data key="d3">947.96</data>
+      <data key="d4">678.0</data>
+      <data key="d5">1.5</data>
+      <data key="d12">27.68</data>
+      <data key="d13">38.42116751269035</data>
+      <data key="d14">27.68</data>
+      <data key="d15">55.37</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">443.71225416929815</data>
+      <data key="d19">0</data>
+      <data key="d20">197</data>
+      <data key="d9">275.0</data>
+    </node>
+    <node id="UE_1014">
+      <data key="d0">ue</data>
+      <data key="d10">1014</data>
+      <data key="d11">1014</data>
+      <data key="d3">459.62</data>
+      <data key="d4">807.62</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.16</data>
+      <data key="d13">31.581770186335415</data>
+      <data key="d14">17.16</data>
+      <data key="d15">56.57</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">765.5053259775531</data>
+      <data key="d19">0</data>
+      <data key="d20">322</data>
+      <data key="d9">401.0</data>
+    </node>
+    <node id="UE_1015">
+      <data key="d0">ue</data>
+      <data key="d10">1015</data>
+      <data key="d11">1015</data>
+      <data key="d3">609.27</data>
+      <data key="d4">975.93</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.0</data>
+      <data key="d13">21.527763975155274</data>
+      <data key="d14">17.0</data>
+      <data key="d15">28.51</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">580.5328436014623</data>
+      <data key="d19">0</data>
+      <data key="d20">161</data>
+      <data key="d9">245.0</data>
+    </node>
+    <node id="UE_1016">
+      <data key="d0">ue</data>
+      <data key="d10">1016</data>
+      <data key="d11">1016</data>
+      <data key="d3">958.65</data>
+      <data key="d4">777.14</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.18</data>
+      <data key="d13">27.431682242990668</data>
+      <data key="d14">24.18</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">356.8520099424969</data>
+      <data key="d19">0</data>
+      <data key="d20">107</data>
+      <data key="d9">196.0</data>
+    </node>
+    <node id="UE_1017">
+      <data key="d0">ue</data>
+      <data key="d10">1017</data>
+      <data key="d11">1017</data>
+      <data key="d3">522.31</data>
+      <data key="d4">881.06</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.21</data>
+      <data key="d13">20.087425742574258</data>
+      <data key="d14">17.21</data>
+      <data key="d15">23.49</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">684.3474914106137</data>
+      <data key="d19">0</data>
+      <data key="d20">101</data>
+      <data key="d9">199.0</data>
+    </node>
+    <node id="UE_1018">
+      <data key="d0">ue</data>
+      <data key="d10">1018</data>
+      <data key="d11">1018</data>
+      <data key="d3">939.27</data>
+      <data key="d4">756.02</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.74</data>
+      <data key="d13">26.13560975609756</data>
+      <data key="d14">24.07</data>
+      <data key="d15">28.52</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">385.47355110305546</data>
+      <data key="d19">0</data>
+      <data key="d20">41</data>
+      <data key="d9">145.0</data>
+    </node>
+    <node id="UE_1019">
+      <data key="d0">ue</data>
+      <data key="d10">1019</data>
+      <data key="d11">1019</data>
+      <data key="d3">212.99</data>
+      <data key="d4">834.43</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.96</data>
+      <data key="d13">13.997999999999996</data>
+      <data key="d14">13.67</data>
+      <data key="d15">14.55</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">995.9829651655693</data>
+      <data key="d19">0</data>
+      <data key="d20">20</data>
+      <data key="d9">133.0</data>
+    </node>
+    <node id="UE_1020">
+      <data key="d0">ue</data>
+      <data key="d10">1020</data>
+      <data key="d11">1020</data>
+      <data key="d3">737.46</data>
+      <data key="d4">556.09</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.95</data>
+      <data key="d13">30.626219512195114</data>
+      <data key="d14">25.34</data>
+      <data key="d15">39.38</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">668.7299030251299</data>
+      <data key="d19">0</data>
+      <data key="d20">82</data>
+      <data key="d9">196.0</data>
+    </node>
+    <node id="UE_1021">
+      <data key="d0">ue</data>
+      <data key="d10">1021</data>
+      <data key="d11">1021</data>
+      <data key="d3">858.93</data>
+      <data key="d4">797.68</data>
+      <data key="d5">1.5</data>
+      <data key="d12">22.84</data>
+      <data key="d13">23.201999999999998</data>
+      <data key="d14">22.84</data>
+      <data key="d15">23.47</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">414.0421459223686</data>
+      <data key="d19">0</data>
+      <data key="d20">5</data>
+      <data key="d9">131.0</data>
+    </node>
+    <node id="UE_1022">
+      <data key="d0">ue</data>
+      <data key="d10">1022</data>
+      <data key="d11">1022</data>
+      <data key="d3">947.07</data>
+      <data key="d4">688.15</data>
+      <data key="d5">1.5</data>
+      <data key="d12">27.26</data>
+      <data key="d13">39.69345360824741</data>
+      <data key="d14">27.26</data>
+      <data key="d15">56.58</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">435.64484950473116</data>
+      <data key="d19">0</data>
+      <data key="d20">194</data>
+      <data key="d9">321.0</data>
+    </node>
+    <node id="UE_1023">
+      <data key="d0">ue</data>
+      <data key="d10">1023</data>
+      <data key="d11">1023</data>
+      <data key="d3">794.56</data>
+      <data key="d4">639.75</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.94</data>
+      <data key="d13">24.761499999999995</data>
+      <data key="d14">24.07</data>
+      <data key="d15">25.94</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">568.502612131202</data>
+      <data key="d19">0</data>
+      <data key="d20">20</data>
+      <data key="d9">148.0</data>
+    </node>
+    <node id="UE_1024">
+      <data key="d0">ue</data>
+      <data key="d10">1024</data>
+      <data key="d11">1024</data>
+      <data key="d3">272.07</data>
+      <data key="d4">792.77</data>
+      <data key="d5">1.5</data>
+      <data key="d12">14.87</data>
+      <data key="d13">15.188333333333334</data>
+      <data key="d14">14.87</data>
+      <data key="d15">15.43</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">949.0200293460617</data>
+      <data key="d19">0</data>
+      <data key="d20">6</data>
+      <data key="d9">136.0</data>
+    </node>
+    <node id="UE_1025">
+      <data key="d0">ue</data>
+      <data key="d10">1025</data>
+      <data key="d11">1025</data>
+      <data key="d3">856.78</data>
+      <data key="d4">947.9</data>
+      <data key="d5">1.5</data>
+      <data key="d12">19.46</data>
+      <data key="d13">24.75945945945946</data>
+      <data key="d14">19.35</data>
+      <data key="d15">28.51</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">344.37559509930423</data>
+      <data key="d19">0</data>
+      <data key="d20">74</data>
+      <data key="d9">220.0</data>
+    </node>
+    <node id="UE_1026">
+      <data key="d0">ue</data>
+      <data key="d10">1026</data>
+      <data key="d11">1026</data>
+      <data key="d3">1056.9</data>
+      <data key="d4">867.59</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.66</data>
+      <data key="d13">21.618823529411767</data>
+      <data key="d14">20.31</data>
+      <data key="d15">23.99</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">225.41460910952492</data>
+      <data key="d19">0</data>
+      <data key="d20">51</data>
+      <data key="d9">198.0</data>
+    </node>
+    <node id="UE_1027">
+      <data key="d0">ue</data>
+      <data key="d10">1027</data>
+      <data key="d11">1027</data>
+      <data key="d3">846.52</data>
+      <data key="d4">847.81</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.5</data>
+      <data key="d13">23.494705882352942</data>
+      <data key="d14">21.5</data>
+      <data key="d15">24.38</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">395.664100469072</data>
+      <data key="d19">0</data>
+      <data key="d20">17</data>
+      <data key="d9">170.0</data>
+    </node>
+    <node id="UE_1028">
+      <data key="d0">ue</data>
+      <data key="d10">1028</data>
+      <data key="d11">1028</data>
+      <data key="d3">144.94</data>
+      <data key="d4">966.58</data>
+      <data key="d5">1.5</data>
+      <data key="d12">12.54</data>
+      <data key="d13">14.362244897959181</data>
+      <data key="d14">12.54</data>
+      <data key="d15">16.64</data>
+      <data key="d16">Fair</data>
+      <data key="d17">2</data>
+      <data key="d18">1043.2928950683024</data>
+      <data key="d19">0</data>
+      <data key="d20">49</data>
+      <data key="d9">205.0</data>
+    </node>
+    <node id="UE_1029">
+      <data key="d0">ue</data>
+      <data key="d10">1029</data>
+      <data key="d11">1029</data>
+      <data key="d3">1151.55</data>
+      <data key="d4">717.56</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.79</data>
+      <data key="d13">27.274845360824745</data>
+      <data key="d14">25.41</data>
+      <data key="d15">32.2</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">1</data>
+      <data key="d18">358.64222632032613</data>
+      <data key="d19">1</data>
+      <data key="d20">97</data>
+      <data key="d9">256.0</data>
+    </node>
+    <node id="UE_1030">
+      <data key="d0">ue</data>
+      <data key="d10">1030</data>
+      <data key="d11">1030</data>
+      <data key="d3">840.8</data>
+      <data key="d4">883.51</data>
+      <data key="d5">1.5</data>
+      <data key="d12">20.67</data>
+      <data key="d13">23.46857142857142</data>
+      <data key="d14">20.67</data>
+      <data key="d15">24.35</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">383.4723259897641</data>
+      <data key="d19">0</data>
+      <data key="d20">28</data>
+      <data key="d9">191.0</data>
+    </node>
+    <node id="UE_1031">
+      <data key="d0">ue</data>
+      <data key="d10">1031</data>
+      <data key="d11">1031</data>
+      <data key="d3">846.96</data>
+      <data key="d4">844.93</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.57</data>
+      <data key="d13">26.996543209876542</data>
+      <data key="d14">21.57</data>
+      <data key="d15">32.17</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">396.7931899617229</data>
+      <data key="d19">0</data>
+      <data key="d20">81</data>
+      <data key="d9">247.0</data>
+    </node>
+    <node id="UE_1032">
+      <data key="d0">ue</data>
+      <data key="d10">1032</data>
+      <data key="d11">1032</data>
+      <data key="d3">181.94</data>
+      <data key="d4">790.36</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.85</data>
+      <data key="d13">14.001818181818182</data>
+      <data key="d14">13.79</data>
+      <data key="d15">14.21</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1036.5907597986775</data>
+      <data key="d19">0</data>
+      <data key="d20">11</data>
+      <data key="d9">188.0</data>
+    </node>
+    <node id="UE_1033">
+      <data key="d0">ue</data>
+      <data key="d10">1033</data>
+      <data key="d11">1033</data>
+      <data key="d3">614.85</data>
+      <data key="d4">985.75</data>
+      <data key="d5">1.5</data>
+      <data key="d12">16.92</data>
+      <data key="d13">21.989294871794876</data>
+      <data key="d14">16.92</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">573.7638096813007</data>
+      <data key="d19">0</data>
+      <data key="d20">156</data>
+      <data key="d9">337.0</data>
+    </node>
+    <node id="UE_1034">
+      <data key="d0">ue</data>
+      <data key="d10">1034</data>
+      <data key="d11">1034</data>
+      <data key="d3">951.43</data>
+      <data key="d4">774.33</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.23</data>
+      <data key="d13">26.33342105263158</data>
+      <data key="d14">24.23</data>
+      <data key="d15">28.52</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">363.61872352781825</data>
+      <data key="d19">0</data>
+      <data key="d20">38</data>
+      <data key="d9">223.0</data>
+    </node>
+    <node id="UE_1035">
+      <data key="d0">ue</data>
+      <data key="d10">1035</data>
+      <data key="d11">1035</data>
+      <data key="d3">562.42</data>
+      <data key="d4">991.21</data>
+      <data key="d5">1.5</data>
+      <data key="d12">16.36</data>
+      <data key="d13">22.25790697674417</data>
+      <data key="d14">16.36</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">625.2933186913161</data>
+      <data key="d19">0</data>
+      <data key="d20">172</data>
+      <data key="d9">360.0</data>
+    </node>
+    <node id="UE_1036">
+      <data key="d0">ue</data>
+      <data key="d10">1036</data>
+      <data key="d11">1036</data>
+      <data key="d3">901.53</data>
+      <data key="d4">599.21</data>
+      <data key="d5">1.5</data>
+      <data key="d12">30.4</data>
+      <data key="d13">26.91700000000002</data>
+      <data key="d14">25.34</data>
+      <data key="d15">30.4</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">535.1307527137642</data>
+      <data key="d19">0</data>
+      <data key="d20">70</data>
+      <data key="d9">260.0</data>
+    </node>
+    <node id="UE_1037">
+      <data key="d0">ue</data>
+      <data key="d10">1037</data>
+      <data key="d11">1037</data>
+      <data key="d3">897.82</data>
+      <data key="d4">761.65</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.23</data>
+      <data key="d13">27.46843137254902</data>
+      <data key="d14">24.13</data>
+      <data key="d15">32.17</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">409.0616853238639</data>
+      <data key="d19">0</data>
+      <data key="d20">102</data>
+      <data key="d9">297.0</data>
+    </node>
+    <node id="UE_1038">
+      <data key="d0">ue</data>
+      <data key="d10">1038</data>
+      <data key="d11">1038</data>
+      <data key="d3">601.17</data>
+      <data key="d4">783.01</data>
+      <data key="d5">1.5</data>
+      <data key="d12">19.48</data>
+      <data key="d13">26.269112426035512</data>
+      <data key="d14">19.48</data>
+      <data key="d15">36.82</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">643.029396606407</data>
+      <data key="d19">0</data>
+      <data key="d20">169</data>
+      <data key="d9">371.0</data>
+    </node>
+    <node id="UE_1039">
+      <data key="d0">ue</data>
+      <data key="d10">1039</data>
+      <data key="d11">1039</data>
+      <data key="d3">96.02</data>
+      <data key="d4">745.3</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.1</data>
+      <data key="d13">13.345294117647061</data>
+      <data key="d14">13.1</data>
+      <data key="d15">13.88</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1131.3409923184079</data>
+      <data key="d19">0</data>
+      <data key="d20">17</data>
+      <data key="d9">224.0</data>
+    </node>
+    <node id="UE_1040">
+      <data key="d0">ue</data>
+      <data key="d10">1040</data>
+      <data key="d11">1040</data>
+      <data key="d3">862.07</data>
+      <data key="d4">744.99</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.31</data>
+      <data key="d13">24.347857142857144</data>
+      <data key="d14">24.22</data>
+      <data key="d15">24.54</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">446.21974194336116</data>
+      <data key="d19">0</data>
+      <data key="d20">14</data>
+      <data key="d9">227.0</data>
+    </node>
+    <node id="UE_1041">
+      <data key="d0">ue</data>
+      <data key="d10">1041</data>
+      <data key="d11">1041</data>
+      <data key="d3">485.37</data>
+      <data key="d4">834.51</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.24</data>
+      <data key="d13">19.35348684210524</data>
+      <data key="d14">17.15</data>
+      <data key="d15">24.25</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">732.6887162363017</data>
+      <data key="d19">0</data>
+      <data key="d20">152</data>
+      <data key="d9">368.0</data>
+    </node>
+    <node id="UE_1042">
+      <data key="d0">ue</data>
+      <data key="d10">1042</data>
+      <data key="d11">1042</data>
+      <data key="d3">373.07</data>
+      <data key="d4">517.2</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.56</data>
+      <data key="d13">17.55914285714286</data>
+      <data key="d14">17.46</data>
+      <data key="d15">17.58</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">972.650389091579</data>
+      <data key="d19">0</data>
+      <data key="d20">35</data>
+      <data key="d9">277.0</data>
+    </node>
+    <node id="UE_1043">
+      <data key="d0">ue</data>
+      <data key="d10">1043</data>
+      <data key="d11">1043</data>
+      <data key="d3">630.5</data>
+      <data key="d4">773.92</data>
+      <data key="d5">1.5</data>
+      <data key="d12">20.07</data>
+      <data key="d13">21.971846153846148</data>
+      <data key="d14">20.07</data>
+      <data key="d15">24.24</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">620.5795053818647</data>
+      <data key="d19">0</data>
+      <data key="d20">65</data>
+      <data key="d9">308.0</data>
+    </node>
+    <node id="UE_1044">
+      <data key="d0">ue</data>
+      <data key="d10">1044</data>
+      <data key="d11">1044</data>
+      <data key="d3">793.31</data>
+      <data key="d4">384.06</data>
+      <data key="d5">1.5</data>
+      <data key="d12">29.21</data>
+      <data key="d13">26.182926829268286</data>
+      <data key="d14">24.21</data>
+      <data key="d15">29.41</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">775.2714679388117</data>
+      <data key="d19">0</data>
+      <data key="d20">82</data>
+      <data key="d9">336.0</data>
+    </node>
+    <node id="UE_1045">
+      <data key="d0">ue</data>
+      <data key="d10">1045</data>
+      <data key="d11">1045</data>
+      <data key="d3">952.01</data>
+      <data key="d4">774.58</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.23</data>
+      <data key="d13">25.68760869565217</data>
+      <data key="d14">23.47</data>
+      <data key="d15">28.52</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">363.05505725716023</data>
+      <data key="d19">0</data>
+      <data key="d20">46</data>
+      <data key="d9">310.0</data>
+    </node>
+    <node id="UE_1046">
+      <data key="d0">ue</data>
+      <data key="d10">1046</data>
+      <data key="d11">1046</data>
+      <data key="d3">951.19</data>
+      <data key="d4">642.56</data>
+      <data key="d5">1.5</data>
+      <data key="d12">29.32</data>
+      <data key="d13">27.985510204081635</data>
+      <data key="d14">24.65</data>
+      <data key="d15">32.22</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">472.4632872509777</data>
+      <data key="d19">0</data>
+      <data key="d20">49</data>
+      <data key="d9">314.0</data>
+    </node>
+    <node id="UE_1047">
+      <data key="d0">ue</data>
+      <data key="d10">1047</data>
+      <data key="d11">1047</data>
+      <data key="d3">608.39</data>
+      <data key="d4">770.3</data>
+      <data key="d5">1.5</data>
+      <data key="d12">19.77</data>
+      <data key="d13">24.440961538461547</data>
+      <data key="d14">19.77</data>
+      <data key="d15">32.16</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">641.9867551593256</data>
+      <data key="d19">0</data>
+      <data key="d20">156</data>
+      <data key="d9">423.0</data>
+    </node>
+    <node id="UE_1048">
+      <data key="d0">ue</data>
+      <data key="d10">1048</data>
+      <data key="d11">1048</data>
+      <data key="d3">1023.24</data>
+      <data key="d4">878.09</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.47</data>
+      <data key="d13">22.29403225806451</data>
+      <data key="d14">20.32</data>
+      <data key="d15">24.82</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">238.22796225464367</data>
+      <data key="d19">0</data>
+      <data key="d20">62</data>
+      <data key="d9">330.0</data>
+    </node>
+    <node id="UE_1049">
+      <data key="d0">ue</data>
+      <data key="d10">1049</data>
+      <data key="d11">1049</data>
+      <data key="d3">1049.26</data>
+      <data key="d4">813.41</data>
+      <data key="d5">1.5</data>
+      <data key="d12">23.11</data>
+      <data key="d13">27.594754098360653</data>
+      <data key="d14">23.11</data>
+      <data key="d15">32.17</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">275.47039042336286</data>
+      <data key="d19">0</data>
+      <data key="d20">61</data>
+      <data key="d9">332.0</data>
+    </node>
+    <node id="UE_1050">
+      <data key="d0">ue</data>
+      <data key="d10">1050</data>
+      <data key="d11">1050</data>
+      <data key="d3">862.58</data>
+      <data key="d4">745.2</data>
+      <data key="d5">1.5</data>
+      <data key="d12">24.31</data>
+      <data key="d13">24.287</data>
+      <data key="d14">24.2</data>
+      <data key="d15">24.34</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">445.70602250811</data>
+      <data key="d19">0</data>
+      <data key="d20">10</data>
+      <data key="d9">292.0</data>
+    </node>
+    <node id="UE_1051">
+      <data key="d0">ue</data>
+      <data key="d10">1051</data>
+      <data key="d11">1051</data>
+      <data key="d3">553.45</data>
+      <data key="d4">795.38</data>
+      <data key="d5">1.5</data>
+      <data key="d12">18.61</data>
+      <data key="d13">20.317647058823532</data>
+      <data key="d14">18.51</data>
+      <data key="d15">28.11</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">681.8458560407914</data>
+      <data key="d19">0</data>
+      <data key="d20">153</data>
+      <data key="d9">448.0</data>
+    </node>
+    <node id="UE_1052">
+      <data key="d0">ue</data>
+      <data key="d10">1052</data>
+      <data key="d11">1052</data>
+      <data key="d3">115.61</data>
+      <data key="d4">298.62</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.81</data>
+      <data key="d13">13.926875000000003</data>
+      <data key="d14">13.76</data>
+      <data key="d15">14.12</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1308.5753949238078</data>
+      <data key="d19">0</data>
+      <data key="d20">16</data>
+      <data key="d9">316.0</data>
+    </node>
+    <node id="UE_1053">
+      <data key="d0">ue</data>
+      <data key="d10">1053</data>
+      <data key="d11">1053</data>
+      <data key="d3">780.5</data>
+      <data key="d4">617.82</data>
+      <data key="d5">1.5</data>
+      <data key="d12">26.1</data>
+      <data key="d13">24.83592592592592</data>
+      <data key="d14">24.2</data>
+      <data key="d15">26.1</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">594.1228277890017</data>
+      <data key="d19">0</data>
+      <data key="d20">27</data>
+      <data key="d9">334.0</data>
+    </node>
+    <node id="UE_1054">
+      <data key="d0">ue</data>
+      <data key="d10">1054</data>
+      <data key="d11">1054</data>
+      <data key="d3">1020.62</data>
+      <data key="d4">871.39</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.64</data>
+      <data key="d13">21.242400000000004</data>
+      <data key="d14">20.31</data>
+      <data key="d15">21.84</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">244.94522571383166</data>
+      <data key="d19">0</data>
+      <data key="d20">25</data>
+      <data key="d9">335.0</data>
+    </node>
+    <node id="UE_1055">
+      <data key="d0">ue</data>
+      <data key="d10">1055</data>
+      <data key="d11">1055</data>
+      <data key="d3">950.99</data>
+      <data key="d4">644.76</data>
+      <data key="d5">1.5</data>
+      <data key="d12">29.21</data>
+      <data key="d13">27.953888888888894</data>
+      <data key="d14">24.06</data>
+      <data key="d15">32.18</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">470.6510616157154</data>
+      <data key="d19">0</data>
+      <data key="d20">54</data>
+      <data key="d9">366.0</data>
+    </node>
+    <node id="UE_1056">
+      <data key="d0">ue</data>
+      <data key="d10">1056</data>
+      <data key="d11">1056</data>
+      <data key="d3">980.91</data>
+      <data key="d4">903.53</data>
+      <data key="d5">1.5</data>
+      <data key="d12">20.86</data>
+      <data key="d13">25.04571428571429</data>
+      <data key="d14">20.31</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">252.85925749317536</data>
+      <data key="d19">0</data>
+      <data key="d20">119</data>
+      <data key="d9">436.0</data>
+    </node>
+    <node id="UE_1057">
+      <data key="d0">ue</data>
+      <data key="d10">1057</data>
+      <data key="d11">1057</data>
+      <data key="d3">945.44</data>
+      <data key="d4">910.38</data>
+      <data key="d5">1.5</data>
+      <data key="d12">20.63</data>
+      <data key="d13">24.599302325581405</data>
+      <data key="d14">19.42</data>
+      <data key="d15">28.52</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">278.6427370307719</data>
+      <data key="d19">0</data>
+      <data key="d20">86</data>
+      <data key="d9">405.0</data>
+    </node>
+    <node id="UE_1058">
+      <data key="d0">ue</data>
+      <data key="d10">1058</data>
+      <data key="d11">1058</data>
+      <data key="d3">531.96</data>
+      <data key="d4">821.25</data>
+      <data key="d5">1.5</data>
+      <data key="d12">18.01</data>
+      <data key="d13">23.842905405405403</data>
+      <data key="d14">18.01</data>
+      <data key="d15">32.17</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">692.6948837691814</data>
+      <data key="d19">0</data>
+      <data key="d20">148</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1059">
+      <data key="d0">ue</data>
+      <data key="d10">1059</data>
+      <data key="d11">1059</data>
+      <data key="d3">516.22</data>
+      <data key="d4">829.23</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.71</data>
+      <data key="d13">23.631310344827586</data>
+      <data key="d14">17.71</data>
+      <data key="d15">32.19</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">704.9676375550865</data>
+      <data key="d19">0</data>
+      <data key="d20">145</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1060">
+      <data key="d0">ue</data>
+      <data key="d10">1060</data>
+      <data key="d11">1060</data>
+      <data key="d3">91.57</data>
+      <data key="d4">740.09</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.07</data>
+      <data key="d13">13.913125</data>
+      <data key="d14">13.07</data>
+      <data key="d15">14.75</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1137.0477562969816</data>
+      <data key="d19">0</data>
+      <data key="d20">32</data>
+      <data key="d9">357.0</data>
+    </node>
+    <node id="UE_1061">
+      <data key="d0">ue</data>
+      <data key="d10">1061</data>
+      <data key="d11">1061</data>
+      <data key="d3">913.11</data>
+      <data key="d4">580.42</data>
+      <data key="d5">1.5</data>
+      <data key="d12">31.7</data>
+      <data key="d13">41.1125174825175</data>
+      <data key="d14">31.7</data>
+      <data key="d15">56.55</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">545.3086724049049</data>
+      <data key="d19">0</data>
+      <data key="d20">143</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1062">
+      <data key="d0">ue</data>
+      <data key="d10">1062</data>
+      <data key="d11">1062</data>
+      <data key="d3">703.1</data>
+      <data key="d4">365.08</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.38</data>
+      <data key="d13">26.583709677419353</data>
+      <data key="d14">23.34</data>
+      <data key="d15">29.41</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">839.9699833327379</data>
+      <data key="d19">0</data>
+      <data key="d20">62</data>
+      <data key="d9">391.0</data>
+    </node>
+    <node id="UE_1063">
+      <data key="d0">ue</data>
+      <data key="d10">1063</data>
+      <data key="d11">1063</data>
+      <data key="d3">1020.07</data>
+      <data key="d4">870.37</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.66</data>
+      <data key="d13">21.687894736842104</data>
+      <data key="d14">20.32</data>
+      <data key="d15">23.94</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">246.07125817535035</data>
+      <data key="d19">0</data>
+      <data key="d20">38</data>
+      <data key="d9">368.0</data>
+    </node>
+    <node id="UE_1064">
+      <data key="d0">ue</data>
+      <data key="d10">1064</data>
+      <data key="d11">1064</data>
+      <data key="d3">700.5</data>
+      <data key="d4">402.08</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.51</data>
+      <data key="d13">26.11238532110091</data>
+      <data key="d14">23.83</data>
+      <data key="d15">29.4</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">811.4793508771495</data>
+      <data key="d19">0</data>
+      <data key="d20">109</data>
+      <data key="d9">444.0</data>
+    </node>
+    <node id="UE_1065">
+      <data key="d0">ue</data>
+      <data key="d10">1065</data>
+      <data key="d11">1065</data>
+      <data key="d3">610.28</data>
+      <data key="d4">770.56</data>
+      <data key="d5">1.5</data>
+      <data key="d12">19.79</data>
+      <data key="d13">22.981862745098034</data>
+      <data key="d14">19.79</data>
+      <data key="d15">30.02</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">640.1759980661567</data>
+      <data key="d19">0</data>
+      <data key="d20">102</data>
+      <data key="d9">438.0</data>
+    </node>
+    <node id="UE_1066">
+      <data key="d0">ue</data>
+      <data key="d10">1066</data>
+      <data key="d11">1066</data>
+      <data key="d3">842.94</data>
+      <data key="d4">943.07</data>
+      <data key="d5">1.5</data>
+      <data key="d12">19.47</data>
+      <data key="d13">23.93977272727273</data>
+      <data key="d14">19.47</data>
+      <data key="d15">28.66</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">359.02992911455146</data>
+      <data key="d19">0</data>
+      <data key="d20">44</data>
+      <data key="d9">382.0</data>
+    </node>
+    <node id="UE_1067">
+      <data key="d0">ue</data>
+      <data key="d10">1067</data>
+      <data key="d11">1067</data>
+      <data key="d3">277.02</data>
+      <data key="d4">790.82</data>
+      <data key="d5">1.5</data>
+      <data key="d12">14.95</data>
+      <data key="d13">15.226111111111111</data>
+      <data key="d14">14.56</data>
+      <data key="d15">15.99</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">944.8011749040112</data>
+      <data key="d19">0</data>
+      <data key="d20">54</data>
+      <data key="d9">393.0</data>
+    </node>
+    <node id="UE_1068">
+      <data key="d0">ue</data>
+      <data key="d10">1068</data>
+      <data key="d11">1068</data>
+      <data key="d3">1002.51</data>
+      <data key="d4">497.91</data>
+      <data key="d5">1.5</data>
+      <data key="d12">42.27</data>
+      <data key="d13">29.528720000000018</data>
+      <data key="d14">22.91</data>
+      <data key="d15">42.27</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">584.5129840302949</data>
+      <data key="d19">0</data>
+      <data key="d20">125</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1069">
+      <data key="d0">ue</data>
+      <data key="d10">1069</data>
+      <data key="d11">1069</data>
+      <data key="d3">700.5</data>
+      <data key="d4">402.08</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.51</data>
+      <data key="d13">26.207058823529415</data>
+      <data key="d14">22.65</data>
+      <data key="d15">29.41</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">811.4793508771495</data>
+      <data key="d19">0</data>
+      <data key="d20">68</data>
+      <data key="d9">419.0</data>
+    </node>
+    <node id="UE_1070">
+      <data key="d0">ue</data>
+      <data key="d10">1070</data>
+      <data key="d11">1070</data>
+      <data key="d3">575.63</data>
+      <data key="d4">916.48</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.41</data>
+      <data key="d13">20.600423728813556</data>
+      <data key="d14">17.21</data>
+      <data key="d15">24.54</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">624.1768520219249</data>
+      <data key="d19">0</data>
+      <data key="d20">118</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1071">
+      <data key="d0">ue</data>
+      <data key="d10">1071</data>
+      <data key="d11">1071</data>
+      <data key="d3">1013.05</data>
+      <data key="d4">864.43</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.82</data>
+      <data key="d13">25.579572649572665</data>
+      <data key="d14">20.31</data>
+      <data key="d15">32.16</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">255.18517766516138</data>
+      <data key="d19">0</data>
+      <data key="d20">117</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1072">
+      <data key="d0">ue</data>
+      <data key="d10">1072</data>
+      <data key="d11">1072</data>
+      <data key="d3">208.36</data>
+      <data key="d4">835.3</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.91</data>
+      <data key="d13">13.818799999999996</data>
+      <data key="d14">13.43</data>
+      <data key="d15">14.13</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1000.3102861112644</data>
+      <data key="d19">0</data>
+      <data key="d20">50</data>
+      <data key="d9">409.0</data>
+    </node>
+    <node id="UE_1073">
+      <data key="d0">ue</data>
+      <data key="d10">1073</data>
+      <data key="d11">1073</data>
+      <data key="d3">454.33</data>
+      <data key="d4">801.79</data>
+      <data key="d5">1.5</data>
+      <data key="d12">17.14</data>
+      <data key="d13">17.732000000000006</data>
+      <data key="d14">17.14</data>
+      <data key="d15">19.34</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">772.3961779423821</data>
+      <data key="d19">0</data>
+      <data key="d20">50</data>
+      <data key="d9">416.0</data>
+    </node>
+    <node id="UE_1074">
+      <data key="d0">ue</data>
+      <data key="d10">1074</data>
+      <data key="d11">1074</data>
+      <data key="d3">950.49</data>
+      <data key="d4">650.35</data>
+      <data key="d5">1.5</data>
+      <data key="d12">28.94</data>
+      <data key="d13">27.520259740259746</data>
+      <data key="d14">23.76</data>
+      <data key="d15">32.22</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">466.0576544806446</data>
+      <data key="d19">0</data>
+      <data key="d20">77</data>
+      <data key="d9">453.0</data>
+    </node>
+    <node id="UE_1075">
+      <data key="d0">ue</data>
+      <data key="d10">1075</data>
+      <data key="d11">1075</data>
+      <data key="d3">939.28</data>
+      <data key="d4">729.89</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.62</data>
+      <data key="d13">26.21274725274726</data>
+      <data key="d14">20.5</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">405.9620046260486</data>
+      <data key="d19">0</data>
+      <data key="d20">91</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1076">
+      <data key="d0">ue</data>
+      <data key="d10">1076</data>
+      <data key="d11">1076</data>
+      <data key="d3">811.64</data>
+      <data key="d4">671.31</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.52</data>
+      <data key="d13">27.450350877192985</data>
+      <data key="d14">24.2</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">533.9038872306512</data>
+      <data key="d19">0</data>
+      <data key="d20">57</data>
+      <data key="d9">440.0</data>
+    </node>
+    <node id="UE_1077">
+      <data key="d0">ue</data>
+      <data key="d10">1077</data>
+      <data key="d11">1077</data>
+      <data key="d3">941.79</data>
+      <data key="d4">708.12</data>
+      <data key="d5">1.5</data>
+      <data key="d12">26.43</data>
+      <data key="d13">26.542073170731705</data>
+      <data key="d14">21.24</data>
+      <data key="d15">32.21</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">422.06202506266766</data>
+      <data key="d19">0</data>
+      <data key="d20">82</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1078">
+      <data key="d0">ue</data>
+      <data key="d10">1078</data>
+      <data key="d11">1078</data>
+      <data key="d3">1001.47</data>
+      <data key="d4">566.27</data>
+      <data key="d5">1.5</data>
+      <data key="d12">34.58</data>
+      <data key="d13">26.41166666666667</data>
+      <data key="d14">20.57</data>
+      <data key="d15">34.58</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">520.3569602686216</data>
+      <data key="d19">0</data>
+      <data key="d20">78</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1079">
+      <data key="d0">ue</data>
+      <data key="d10">1079</data>
+      <data key="d11">1079</data>
+      <data key="d3">967.02</data>
+      <data key="d4">912.32</data>
+      <data key="d5">1.5</data>
+      <data key="d12">20.64</data>
+      <data key="d13">20.655</data>
+      <data key="d14">20.64</data>
+      <data key="d15">20.67</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">259.29438887102805</data>
+      <data key="d19">0</data>
+      <data key="d20">2</data>
+      <data key="d9">409.0</data>
+    </node>
+    <node id="UE_1080">
+      <data key="d0">ue</data>
+      <data key="d10">1080</data>
+      <data key="d11">1080</data>
+      <data key="d3">199.1</data>
+      <data key="d4">780.83</data>
+      <data key="d5">1.5</data>
+      <data key="d12">14.09</data>
+      <data key="d13">14.100819672131145</data>
+      <data key="d14">13.43</data>
+      <data key="d15">14.67</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1022.499838826393</data>
+      <data key="d19">0</data>
+      <data key="d20">61</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1081">
+      <data key="d0">ue</data>
+      <data key="d10">1081</data>
+      <data key="d11">1081</data>
+      <data key="d3">286.0</data>
+      <data key="d4">783.51</data>
+      <data key="d5">1.5</data>
+      <data key="d12">15.1</data>
+      <data key="d13">14.527804878048777</data>
+      <data key="d14">14.2</data>
+      <data key="d15">15.1</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">938.2540896793362</data>
+      <data key="d19">0</data>
+      <data key="d20">41</data>
+      <data key="d9">458.0</data>
+    </node>
+    <node id="UE_1082">
+      <data key="d0">ue</data>
+      <data key="d10">1082</data>
+      <data key="d11">1082</data>
+      <data key="d3">849.64</data>
+      <data key="d4">848.57</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.51</data>
+      <data key="d13">21.76</data>
+      <data key="d14">21.51</data>
+      <data key="d15">21.96</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">392.6044548906697</data>
+      <data key="d19">0</data>
+      <data key="d20">4</data>
+      <data key="d9">425.0</data>
+    </node>
+    <node id="UE_1083">
+      <data key="d0">ue</data>
+      <data key="d10">1083</data>
+      <data key="d11">1083</data>
+      <data key="d3">185.4</data>
+      <data key="d4">833.54</data>
+      <data key="d5">1.5</data>
+      <data key="d12">13.67</data>
+      <data key="d13">13.79151515151515</data>
+      <data key="d14">13.43</data>
+      <data key="d15">14.08</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1023.1071559225846</data>
+      <data key="d19">0</data>
+      <data key="d20">33</data>
+      <data key="d9">455.0</data>
+    </node>
+    <node id="UE_1084">
+      <data key="d0">ue</data>
+      <data key="d10">1084</data>
+      <data key="d11">1084</data>
+      <data key="d3">916.68</data>
+      <data key="d4">599.81</data>
+      <data key="d5">1.5</data>
+      <data key="d12">30.8</data>
+      <data key="d13">27.0158695652174</data>
+      <data key="d14">25.41</data>
+      <data key="d15">30.8</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">526.756332662456</data>
+      <data key="d19">0</data>
+      <data key="d20">46</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1085">
+      <data key="d0">ue</data>
+      <data key="d10">1085</data>
+      <data key="d11">1085</data>
+      <data key="d3">782.63</data>
+      <data key="d4">807.82</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.71</data>
+      <data key="d13">23.534000000000006</data>
+      <data key="d14">21.71</data>
+      <data key="d15">26.17</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">471.0319736493478</data>
+      <data key="d19">0</data>
+      <data key="d20">45</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1086">
+      <data key="d0">ue</data>
+      <data key="d10">1086</data>
+      <data key="d11">1086</data>
+      <data key="d3">997.11</data>
+      <data key="d4">458.26</data>
+      <data key="d5">1.5</data>
+      <data key="d12">50.98</data>
+      <data key="d13">41.805</data>
+      <data key="d14">35.95</data>
+      <data key="d15">50.98</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">623.9136999617815</data>
+      <data key="d19">0</data>
+      <data key="d20">44</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1087">
+      <data key="d0">ue</data>
+      <data key="d10">1087</data>
+      <data key="d11">1087</data>
+      <data key="d3">821.67</data>
+      <data key="d4">605.83</data>
+      <data key="d5">1.5</data>
+      <data key="d12">27.65</data>
+      <data key="d13">25.355714285714285</data>
+      <data key="d14">23.2</data>
+      <data key="d15">27.65</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">576.1848249476898</data>
+      <data key="d19">0</data>
+      <data key="d20">35</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1088">
+      <data key="d0">ue</data>
+      <data key="d10">1088</data>
+      <data key="d11">1088</data>
+      <data key="d3">846.81</data>
+      <data key="d4">604.98</data>
+      <data key="d5">1.5</data>
+      <data key="d12">28.48</data>
+      <data key="d13">26.25500000000001</data>
+      <data key="d14">25.41</data>
+      <data key="d15">28.48</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">561.3673651006085</data>
+      <data key="d19">0</data>
+      <data key="d20">34</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1089">
+      <data key="d0">ue</data>
+      <data key="d10">1089</data>
+      <data key="d11">1089</data>
+      <data key="d3">798.58</data>
+      <data key="d4">810.13</data>
+      <data key="d5">1.5</data>
+      <data key="d12">21.85</data>
+      <data key="d13">23.23030303030303</data>
+      <data key="d14">21.85</data>
+      <data key="d15">24.28</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">456.25992767281224</data>
+      <data key="d19">0</data>
+      <data key="d20">33</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1090">
+      <data key="d0">ue</data>
+      <data key="d10">1090</data>
+      <data key="d11">1090</data>
+      <data key="d3">126.86</data>
+      <data key="d4">890.64</data>
+      <data key="d5">1.5</data>
+      <data key="d12">12.78</data>
+      <data key="d13">12.892307692307693</data>
+      <data key="d14">12.78</data>
+      <data key="d15">13.03</data>
+      <data key="d16">Fair</data>
+      <data key="d17">2</data>
+      <data key="d18">1070.198231030121</data>
+      <data key="d19">0</data>
+      <data key="d20">13</data>
+      <data key="d9">450.0</data>
+    </node>
+    <node id="UE_1091">
+      <data key="d0">ue</data>
+      <data key="d10">1091</data>
+      <data key="d11">1091</data>
+      <data key="d3">564.35</data>
+      <data key="d4">804.59</data>
+      <data key="d5">1.5</data>
+      <data key="d12">18.66</data>
+      <data key="d13">19.330000000000002</data>
+      <data key="d14">18.66</data>
+      <data key="d15">19.89</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">668.2862115141983</data>
+      <data key="d19">0</data>
+      <data key="d20">21</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1092">
+      <data key="d0">ue</data>
+      <data key="d10">1092</data>
+      <data key="d11">1092</data>
+      <data key="d3">621.18</data>
+      <data key="d4">448.9</data>
+      <data key="d5">1.5</data>
+      <data key="d12">23.05</data>
+      <data key="d13">21.7705</data>
+      <data key="d14">20.56</data>
+      <data key="d15">23.05</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">826.3172868214726</data>
+      <data key="d19">0</data>
+      <data key="d20">20</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1093">
+      <data key="d0">ue</data>
+      <data key="d10">1093</data>
+      <data key="d11">1093</data>
+      <data key="d3">254.42</data>
+      <data key="d4">447.0</data>
+      <data key="d5">1.5</data>
+      <data key="d12">15.78</data>
+      <data key="d13">16.658125000000002</data>
+      <data key="d14">15.78</data>
+      <data key="d15">17.51</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">1110.3639533504318</data>
+      <data key="d19">0</data>
+      <data key="d20">16</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1094">
+      <data key="d0">ue</data>
+      <data key="d10">1094</data>
+      <data key="d11">1094</data>
+      <data key="d3">699.22</data>
+      <data key="d4">412.92</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.5</data>
+      <data key="d13">25.979333333333333</data>
+      <data key="d14">25.34</data>
+      <data key="d15">27.34</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">803.578327296101</data>
+      <data key="d19">0</data>
+      <data key="d20">15</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1095">
+      <data key="d0">ue</data>
+      <data key="d10">1095</data>
+      <data key="d11">1095</data>
+      <data key="d3">239.44</data>
+      <data key="d4">788.88</data>
+      <data key="d5">1.5</data>
+      <data key="d12">14.51</data>
+      <data key="d13">14.645</data>
+      <data key="d14">14.51</data>
+      <data key="d15">14.75</data>
+      <data key="d16">Good</data>
+      <data key="d17">2</data>
+      <data key="d18">981.4779849288519</data>
+      <data key="d19">0</data>
+      <data key="d20">14</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1096">
+      <data key="d0">ue</data>
+      <data key="d10">1096</data>
+      <data key="d11">1096</data>
+      <data key="d3">747.9</data>
+      <data key="d4">368.05</data>
+      <data key="d5">1.5</data>
+      <data key="d12">27.05</data>
+      <data key="d13">28.40142857142857</data>
+      <data key="d14">27.05</data>
+      <data key="d15">29.38</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">812.6087845944073</data>
+      <data key="d19">0</data>
+      <data key="d20">7</data>
+      <data key="d9">470.0</data>
+    </node>
+    <node id="UE_1097">
+      <data key="d0">ue</data>
+      <data key="d10">1097</data>
+      <data key="d11">1097</data>
+      <data key="d3">738.69</data>
+      <data key="d4">557.2</data>
+      <data key="d5">1.5</data>
+      <data key="d12">25.97</data>
+      <data key="d13">25.742</data>
+      <data key="d14">25.55</data>
+      <data key="d15">25.97</data>
+      <data key="d16">Excellent</data>
+      <data key="d17">2</data>
+      <data key="d18">667.0821102383122</data>
+      <data key="d19">0</data>
+      <data key="d20">5</data>
+      <data key="d9">470.0</data>
+    </node>
+    <edge source="gNB_1" target="gNB_2">
+      <data key="d21">x2</data>
+      <data key="d22">0.0</data>
+    </edge>
+    <edge source="gNB_1" target="UE_1002">
+      <data key="d21">serving</data>
+      <data key="d23">17.96</data>
+      <data key="d24">Good</data>
+      <data key="d22">742.0831091596143</data>
+    </edge>
+    <edge source="gNB_1" target="UE_1029">
+      <data key="d21">serving</data>
+      <data key="d23">25.79</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">358.64222632032613</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1008">
+      <data key="d21">serving</data>
+      <data key="d23">15.05</data>
+      <data key="d24">Good</data>
+      <data key="d22">953.2329407862487</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1004">
+      <data key="d21">serving</data>
+      <data key="d23">31.95</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">512.5342245157876</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1006">
+      <data key="d21">serving</data>
+      <data key="d23">32.12</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">515.5925586158123</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1005">
+      <data key="d21">serving</data>
+      <data key="d23">35.31</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">521.4050939528687</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1021">
+      <data key="d21">serving</data>
+      <data key="d23">22.84</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">414.0421459223686</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1019">
+      <data key="d21">serving</data>
+      <data key="d23">13.96</data>
+      <data key="d24">Good</data>
+      <data key="d22">995.9829651655693</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1024">
+      <data key="d21">serving</data>
+      <data key="d23">14.87</data>
+      <data key="d24">Good</data>
+      <data key="d22">949.0200293460617</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1018">
+      <data key="d21">serving</data>
+      <data key="d23">24.74</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">385.47355110305546</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1023">
+      <data key="d21">serving</data>
+      <data key="d23">25.94</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">568.502612131202</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1027">
+      <data key="d21">serving</data>
+      <data key="d23">21.5</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">395.664100469072</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1011">
+      <data key="d21">serving</data>
+      <data key="d23">25.52</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">795.6256203139765</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1012">
+      <data key="d21">serving</data>
+      <data key="d23">25.5</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">803.7273364767431</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1032">
+      <data key="d21">serving</data>
+      <data key="d23">13.85</data>
+      <data key="d24">Good</data>
+      <data key="d22">1036.5907597986775</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1030">
+      <data key="d21">serving</data>
+      <data key="d23">20.67</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">383.4723259897641</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1016">
+      <data key="d21">serving</data>
+      <data key="d23">24.18</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">356.8520099424969</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1020">
+      <data key="d21">serving</data>
+      <data key="d23">25.95</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">668.7299030251299</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1026">
+      <data key="d21">serving</data>
+      <data key="d23">21.66</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">225.41460910952492</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1017">
+      <data key="d21">serving</data>
+      <data key="d23">17.21</data>
+      <data key="d24">Good</data>
+      <data key="d22">684.3474914106137</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1028">
+      <data key="d21">serving</data>
+      <data key="d23">12.54</data>
+      <data key="d24">Fair</data>
+      <data key="d22">1043.2928950683024</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1025">
+      <data key="d21">serving</data>
+      <data key="d23">19.46</data>
+      <data key="d24">Good</data>
+      <data key="d22">344.37559509930423</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1034">
+      <data key="d21">serving</data>
+      <data key="d23">24.23</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">363.61872352781825</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1039">
+      <data key="d21">serving</data>
+      <data key="d23">13.1</data>
+      <data key="d24">Good</data>
+      <data key="d22">1131.3409923184079</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1040">
+      <data key="d21">serving</data>
+      <data key="d23">24.31</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">446.21974194336116</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1015">
+      <data key="d21">serving</data>
+      <data key="d23">17.0</data>
+      <data key="d24">Good</data>
+      <data key="d22">580.5328436014623</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1031">
+      <data key="d21">serving</data>
+      <data key="d23">21.57</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">396.7931899617229</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1036">
+      <data key="d21">serving</data>
+      <data key="d23">30.4</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">535.1307527137642</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1007">
+      <data key="d21">serving</data>
+      <data key="d23">25.52</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">795.6414698216778</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1013">
+      <data key="d21">serving</data>
+      <data key="d23">27.68</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">443.71225416929815</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1042">
+      <data key="d21">serving</data>
+      <data key="d23">17.56</data>
+      <data key="d24">Good</data>
+      <data key="d22">972.650389091579</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1010">
+      <data key="d21">serving</data>
+      <data key="d23">30.4</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">766.3701150880036</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1050">
+      <data key="d21">serving</data>
+      <data key="d23">24.31</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">445.70602250811</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1037">
+      <data key="d21">serving</data>
+      <data key="d23">24.23</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">409.0616853238639</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1043">
+      <data key="d21">serving</data>
+      <data key="d23">20.07</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">620.5795053818647</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1045">
+      <data key="d21">serving</data>
+      <data key="d23">24.23</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">363.05505725716023</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1046">
+      <data key="d21">serving</data>
+      <data key="d23">29.32</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">472.4632872509777</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1052">
+      <data key="d21">serving</data>
+      <data key="d23">13.81</data>
+      <data key="d24">Good</data>
+      <data key="d22">1308.5753949238078</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1022">
+      <data key="d21">serving</data>
+      <data key="d23">27.26</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">435.64484950473116</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1048">
+      <data key="d21">serving</data>
+      <data key="d23">21.47</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">238.22796225464367</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1049">
+      <data key="d21">serving</data>
+      <data key="d23">23.11</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">275.47039042336286</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1009">
+      <data key="d21">serving</data>
+      <data key="d23">18.71</data>
+      <data key="d24">Good</data>
+      <data key="d22">753.1061077962387</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1053">
+      <data key="d21">serving</data>
+      <data key="d23">26.1</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">594.1228277890017</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1054">
+      <data key="d21">serving</data>
+      <data key="d23">21.64</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">244.94522571383166</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1044">
+      <data key="d21">serving</data>
+      <data key="d23">29.21</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">775.2714679388117</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1033">
+      <data key="d21">serving</data>
+      <data key="d23">16.92</data>
+      <data key="d24">Good</data>
+      <data key="d22">573.7638096813007</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1060">
+      <data key="d21">serving</data>
+      <data key="d23">13.07</data>
+      <data key="d24">Good</data>
+      <data key="d22">1137.0477562969816</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1035">
+      <data key="d21">serving</data>
+      <data key="d23">16.36</data>
+      <data key="d24">Good</data>
+      <data key="d22">625.2933186913161</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1055">
+      <data key="d21">serving</data>
+      <data key="d23">29.21</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">470.6510616157154</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1041">
+      <data key="d21">serving</data>
+      <data key="d23">17.24</data>
+      <data key="d24">Good</data>
+      <data key="d22">732.6887162363017</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1063">
+      <data key="d21">serving</data>
+      <data key="d23">21.66</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">246.07125817535035</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1038">
+      <data key="d21">serving</data>
+      <data key="d23">19.48</data>
+      <data key="d24">Good</data>
+      <data key="d22">643.029396606407</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1066">
+      <data key="d21">serving</data>
+      <data key="d23">19.47</data>
+      <data key="d24">Good</data>
+      <data key="d22">359.02992911455146</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1062">
+      <data key="d21">serving</data>
+      <data key="d23">25.38</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">839.9699833327379</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1067">
+      <data key="d21">serving</data>
+      <data key="d23">14.95</data>
+      <data key="d24">Good</data>
+      <data key="d22">944.8011749040112</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1014">
+      <data key="d21">serving</data>
+      <data key="d23">17.16</data>
+      <data key="d24">Good</data>
+      <data key="d22">765.5053259775531</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1057">
+      <data key="d21">serving</data>
+      <data key="d23">20.63</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">278.6427370307719</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1072">
+      <data key="d21">serving</data>
+      <data key="d23">13.91</data>
+      <data key="d24">Good</data>
+      <data key="d22">1000.3102861112644</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1079">
+      <data key="d21">serving</data>
+      <data key="d23">20.64</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">259.29438887102805</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1073">
+      <data key="d21">serving</data>
+      <data key="d23">17.14</data>
+      <data key="d24">Good</data>
+      <data key="d22">772.3961779423821</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1069">
+      <data key="d21">serving</data>
+      <data key="d23">25.51</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">811.4793508771495</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1047">
+      <data key="d21">serving</data>
+      <data key="d23">19.77</data>
+      <data key="d24">Good</data>
+      <data key="d22">641.9867551593256</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1082">
+      <data key="d21">serving</data>
+      <data key="d23">21.51</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">392.6044548906697</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1056">
+      <data key="d21">serving</data>
+      <data key="d23">20.86</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">252.85925749317536</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1065">
+      <data key="d21">serving</data>
+      <data key="d23">19.79</data>
+      <data key="d24">Good</data>
+      <data key="d22">640.1759980661567</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1076">
+      <data key="d21">serving</data>
+      <data key="d23">25.52</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">533.9038872306512</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1064">
+      <data key="d21">serving</data>
+      <data key="d23">25.51</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">811.4793508771495</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1051">
+      <data key="d21">serving</data>
+      <data key="d23">18.61</data>
+      <data key="d24">Good</data>
+      <data key="d22">681.8458560407914</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1090">
+      <data key="d21">serving</data>
+      <data key="d23">12.78</data>
+      <data key="d24">Fair</data>
+      <data key="d22">1070.198231030121</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1074">
+      <data key="d21">serving</data>
+      <data key="d23">28.94</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">466.0576544806446</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1083">
+      <data key="d21">serving</data>
+      <data key="d23">13.67</data>
+      <data key="d24">Good</data>
+      <data key="d22">1023.1071559225846</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1081">
+      <data key="d21">serving</data>
+      <data key="d23">15.1</data>
+      <data key="d24">Good</data>
+      <data key="d22">938.2540896793362</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1058">
+      <data key="d21">serving</data>
+      <data key="d23">18.01</data>
+      <data key="d24">Good</data>
+      <data key="d22">692.6948837691814</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1059">
+      <data key="d21">serving</data>
+      <data key="d23">17.71</data>
+      <data key="d24">Good</data>
+      <data key="d22">704.9676375550865</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1061">
+      <data key="d21">serving</data>
+      <data key="d23">31.7</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">545.3086724049049</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1068">
+      <data key="d21">serving</data>
+      <data key="d23">42.27</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">584.5129840302949</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1070">
+      <data key="d21">serving</data>
+      <data key="d23">17.41</data>
+      <data key="d24">Good</data>
+      <data key="d22">624.1768520219249</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1071">
+      <data key="d21">serving</data>
+      <data key="d23">21.82</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">255.18517766516138</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1075">
+      <data key="d21">serving</data>
+      <data key="d23">25.62</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">405.9620046260486</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1077">
+      <data key="d21">serving</data>
+      <data key="d23">26.43</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">422.06202506266766</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1078">
+      <data key="d21">serving</data>
+      <data key="d23">34.58</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">520.3569602686216</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1080">
+      <data key="d21">serving</data>
+      <data key="d23">14.09</data>
+      <data key="d24">Good</data>
+      <data key="d22">1022.499838826393</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1084">
+      <data key="d21">serving</data>
+      <data key="d23">30.8</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">526.756332662456</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1085">
+      <data key="d21">serving</data>
+      <data key="d23">21.71</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">471.0319736493478</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1086">
+      <data key="d21">serving</data>
+      <data key="d23">50.98</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">623.9136999617815</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1087">
+      <data key="d21">serving</data>
+      <data key="d23">27.65</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">576.1848249476898</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1088">
+      <data key="d21">serving</data>
+      <data key="d23">28.48</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">561.3673651006085</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1089">
+      <data key="d21">serving</data>
+      <data key="d23">21.85</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">456.25992767281224</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1091">
+      <data key="d21">serving</data>
+      <data key="d23">18.66</data>
+      <data key="d24">Good</data>
+      <data key="d22">668.2862115141983</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1092">
+      <data key="d21">serving</data>
+      <data key="d23">23.05</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">826.3172868214726</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1093">
+      <data key="d21">serving</data>
+      <data key="d23">15.78</data>
+      <data key="d24">Good</data>
+      <data key="d22">1110.3639533504318</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1094">
+      <data key="d21">serving</data>
+      <data key="d23">25.5</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">803.578327296101</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1095">
+      <data key="d21">serving</data>
+      <data key="d23">14.51</data>
+      <data key="d24">Good</data>
+      <data key="d22">981.4779849288519</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1096">
+      <data key="d21">serving</data>
+      <data key="d23">27.05</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">812.6087845944073</data>
+    </edge>
+    <edge source="gNB_2" target="UE_1097">
+      <data key="d21">serving</data>
+      <data key="d23">25.97</data>
+      <data key="d24">Excellent</data>
+      <data key="d22">667.0821102383122</data>
+    </edge>
+  </graph>
+</graphml>

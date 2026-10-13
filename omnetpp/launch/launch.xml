@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- Veins-inet launch configuration for Madrid Scenario -->
+<launch>
+    <!-- SUMO executable: use "sumo" for headless or "sumo-gui" for GUI mode -->
+    <copy file="madrid.net.xml" />
+    <copy file="madrid.rou.xml" />
+    <copy file="madrid.poly.xml" />
+    <copy file="madrid.vtypes.xml" />
+    <copy file="madrid.sumocfg" type="config" />
+</launch>

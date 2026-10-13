@@ -1,0 +1,15 @@
+<vTypes>
+	<vType id="uav_type" 
+       vClass="passenger" 
+       length="0.5" 
+       width="0.5" 
+       height="0.3" 
+       maxSpeed="20"
+       guiShape="aircraft"/>
+ 
+    <vTypeDistribution id="car_type">
+        <vType id="car_ue"    vClass="passenger" probability="0.1" color="0,200,0"/>
+        <vType id="car_plain" vClass="passenger" probability="0.9"/>
+    </vTypeDistribution>
+</vTypes>
+

@@ -1,0 +1,80 @@
+# =========================================================
+#  .gitignore de PRISMAS (va en la raíz del repositorio)
+#  Estructura supuesta:
+#    SUMO-UAV-Py/  omnetpp/  gemelo/  sumo-launch-multi/
+#  Si tus carpetas se llaman distinto, cambia los prefijos.
+# =========================================================
+
+# ---------- General (aplica a todas las carpetas) ----------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.ipynb_checkpoints/
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---------- Plugin de UAVs (SUMO-UAV-Py/) ----------
+# Entorno virtual de Python (en tu repo actual ocupa ~340 MB)
+SUMO-UAV-Py/.venv/
+
+# Resultados de las simulaciones
+SUMO-UAV-Py/Outputs/
+SUMO-UAV-Py/step_times_*.csv
+SUMO-UAV-Py/config_optimized.json
+
+# Imágenes que genera el código al ejecutarse
+SUMO-UAV-Py/snr_heatmap.png
+SUMO-UAV-Py/wind_arrow.png
+
+# Salidas de SUMO de los escenarios
+SUMO-UAV-Py/**/tripinfo*.xml
+SUMO-UAV-Py/**/e1_output.xml
+SUMO-UAV-Py/**/sumo_log.txt
+SUMO-UAV-Py/**/*.out.xml
+
+# Iconos de la interfaz (images/). Los usa main_.py para dibujar
+# los UAVs: si los ignoras, quien clone el repo no podrá lanzar
+# el plugin. Descomenta solo si de verdad no quieres subirlos.
+# SUMO-UAV-Py/images/
+
+# ---------- OMNeT++ (omnetpp/) ----------
+# Compilados y ejecutables
+omnetpp/out/
+omnetpp/dronesTFG
+omnetpp/dronesTFG_dbg
+*.o
+*.so
+*.dll
+*.exe
+
+# Ficheros generados (se regeneran al compilar)
+omnetpp/Makefile
+*_m.cc
+*_m.h
+
+# Resultados de las simulaciones
+omnetpp/**/results/
+*.sca
+*.vec
+*.vci
+*.elog
+*.anf
+
+# Configuración local del IDE / Qtenv
+omnetpp/**/.qtenvrc
+omnetpp/.settings/
+
+# ---------- Gemelo digital (gemelo/) ----------
+gemelo/**/results/
+gemelo/**/output*/
+
+# ---------- sumo-launch-multi ----------
+sumo-launch-multi/**/*.out.xml
+sumo-launch-multi/**/tripinfo*.xml
+sumo-launch-multi/**/output*/
