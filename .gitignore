@@ -48,6 +48,8 @@ SUMO-UAV-Py/**/*.out.xml
 omnetpp/out/
 omnetpp/dronesTFG
 omnetpp/dronesTFG_dbg
+omnetpp/dronesTFG_prismas
+omnetpp/dronesTFG_prismas_dbg
 *.o
 *.so
 *.dll
@@ -71,8 +73,8 @@ omnetpp/**/.qtenvrc
 omnetpp/.settings/
 
 # ---------- Gemelo digital (gemelo/) ----------
-gemelo/**/results/
-gemelo/**/output*/
+DT/coverage_results
+DT/coverage_plots
 
 # ---------- sumo-launch-multi ----------
 sumo-launch-multi/**/*.out.xml
