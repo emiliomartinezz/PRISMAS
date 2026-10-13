@@ -1,9 +1,0 @@
-# Dependencias del gemelo digital
-traci
-ujson
-pandas 
-shapely  
-networkx>=3.0
-numpy>=1.24
-matplotlib>=3.7
-scikit-learn>=1.3
