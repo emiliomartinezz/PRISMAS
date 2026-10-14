@@ -80,3 +80,5 @@ DT/coverage_plots
 sumo-launch-multi/**/*.out.xml
 sumo-launch-multi/**/tripinfo*.xml
 sumo-launch-multi/**/output*/
+
+CLAUDE.md
