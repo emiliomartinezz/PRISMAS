@@ -8,6 +8,9 @@
 //     saltando los huecos que deja Veins cuando un coche sale de SUMO.
 //   - El GNB_Report incluye "sumo_id" (uav0, uav1...), que es la clave que
 //     necesitará el gemelo para mandar órdenes al plugin en el paso 2.
+//   - El GNB_Report incluye "uav_state" (MISSION, RETURNING, CHARGING,
+//     STANDBY, ABSENT o UNKNOWN) para que el gemelo ignore los UAVs que no
+//     están en misión.
 
 #include "GnbSender.h"
 #include "UavFollowerMobility.h"
@@ -198,6 +201,12 @@ void GnbSender::sendGnbInfo()
 {
     Coord pos = mobility->getCurrentPosition();
     std::vector<int> connectedUes = getConnectedUeIds();
+
+    // Estado del UAV que transporta el gNodeB. Sin UavFollowerMobility no hay
+    // estado: "UNKNOWN" (el gemelo lo trata como activo)
+    std::string uavState = "UNKNOWN";
+    if (auto *follower = dynamic_cast<UavFollowerMobility*>(mobility))
+        uavState = follower->getUavState();
     int numConnected = connectedUes.size();
 
     // Formato JSON
@@ -209,6 +218,7 @@ void GnbSender::sendGnbInfo()
          << "\"gnb_id\":" << macNodeId << ","
          << "\"gnb_index\":" << gnbIndex << ","
          << "\"sumo_id\":\"" << sumoId << "\","
+         << "\"uav_state\":\"" << uavState << "\","
          << "\"position\":{"
          << "\"x\":" << pos.x << ","
          << "\"y\":" << pos.y << ","
@@ -245,6 +255,7 @@ void GnbSender::sendGnbInfo()
               << simTime() << " s" << std::endl;
     std::cout << "  Position   : (" << (int)pos.x << ", " << (int)pos.y
               << ", " << (int)pos.z << ") m" << std::endl;
+    std::cout << "  UAV state  : " << uavState << std::endl;
     std::cout << "  Connected  : " << numConnected << " UEs";
 
     if (numConnected > 0) {

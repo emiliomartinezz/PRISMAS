@@ -30,6 +30,11 @@ simple UavFollowerMobility extends MovingMobilityBase
         string altitudeParameter = default("altitude");
         double defaultAltitude @unit(m) = default(25m);
 
+        // Estado del UAV (MISSION, RETURNING...) publicado por el plugin con
+        // publish_state(); se incluye en el GNB_Report para el gemelo
+        bool readStateFromSumo = default(true);
+        string stateParameter = default("uav_state");
+
         // Posicion hasta que el plugin crea el UAV en SUMO
         // (MobilityBase lee initialX/Y/Z automaticamente)
         double initialX @unit(m) = default(0m);

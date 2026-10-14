@@ -20,6 +20,8 @@ void UavFollowerMobility::initialize(int stage)
         readAltitudeFromSumo = par("readAltitudeFromSumo").boolValue();
         altitudeParameter = par("altitudeParameter").stdstringValue();
         currentAltitude = par("defaultAltitude").doubleValue();
+        readStateFromSumo = par("readStateFromSumo").boolValue();
+        stateParameter = par("stateParameter").stdstringValue();
 
         sumoId = par("sumoId").stdstringValue();
         if (sumoId.empty()) {
@@ -51,6 +53,8 @@ void UavFollowerMobility::handleSelfMessage(cMessage *message)
     // llamada perezosa desde dentro del paso de Veins (ver cabecera).
     if (readAltitudeFromSumo && presentInSumo)
         readAltitude();
+    if (readStateFromSumo && presentInSumo)
+        readState();
 
     MovingMobilityBase::handleSelfMessage(message);
 }
@@ -86,6 +90,23 @@ void UavFollowerMobility::readAltitude()
             altitudeWarningShown = true;
         }
     }
+}
+
+void UavFollowerMobility::readState()
+{
+    veins::TraCICommandInterface *traci = manager->getCommandInterface();
+    if (traci == nullptr)
+        return;
+
+    // SUMO devuelve "" si el plugin no publica el estado: se deja "UNKNOWN"
+    std::string value;
+    traci->vehicle(sumoId).getParameter(stateParameter, value);
+    if (value.empty() || value == uavState)
+        return;
+
+    std::cout << "[UavFollowerMobility] '" << sumoId << "' estado " << uavState
+              << " -> " << value << " en t=" << simTime() << "s" << std::endl;
+    uavState = value;
 }
 
 void UavFollowerMobility::move()

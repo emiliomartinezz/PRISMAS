@@ -14,6 +14,7 @@ namespace veins { class TraCIScenarioManager; }
  *     --> gNodeB[i].mobility (esta clase): x, y del uav[k] y z del parametro
  *
  * x, y: se leen del mapa getManagedHosts() del manager (sin llamadas TraCI).
+ * estado: parametro TraCI "uav_state", leido junto a la altura.
  * z: una consulta TraCI en handleSelfMessage(), es decir, UNA VEZ por
  *    updateInterval y como evento propio de OMNeT++.
  *
@@ -40,16 +41,24 @@ class UavFollowerMobility : public inet::MovingMobilityBase
     double currentAltitude = 25.0;
     bool altitudeWarningShown = false;
 
+    // Estado del UAV (MISSION, RETURNING, CHARGING, STANDBY) publicado por el plugin
+    bool readStateFromSumo = true;
+    std::string stateParameter;
+    std::string uavState = "UNKNOWN";
+
   protected:
     virtual int numInitStages() const override { return inet::NUM_INIT_STAGES; }
     virtual void initialize(int stage) override;
     virtual void handleSelfMessage(omnetpp::cMessage *message) override;
     virtual void move() override;
     void readAltitude();
+    void readState();
 
   public:
     const std::string& getSumoId() const { return sumoId; }
     bool isPresentInSumo() const { return presentInSumo; }
+    // "ABSENT" si el UAV no esta en SUMO; "UNKNOWN" si el plugin no publica el estado
+    std::string getUavState() const { return presentInSumo ? uavState : "ABSENT"; }
 };
 
 #endif

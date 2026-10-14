@@ -349,6 +349,17 @@ class UAVSimulation:
         if self.omnet_mode:
             traci.vehicle.setParameter(veh_id, "altitude", f"{float(altitude):.2f}")
 
+    def publish_state(self, veh_id, state):
+        # En modo OMNeT++ se publica el estado del UAV (MISSION, RETURNING,
+        # CHARGING, STANDBY) como parametro generico del vehiculo. El gNodeB que
+        # lo sigue lo incluye en su GNB_Report y el gemelo digital excluye de
+        # sus calculos los UAVs que no estan en mision.
+        if self.omnet_mode:
+            try:
+                traci.vehicle.setParameter(veh_id, "uav_state", state)
+            except traci.TraCIException:
+                pass  # el UAV aun no existe o ya se elimino de SUMO
+
     def create_uav_vehicles(self):
         edges = traci.edge.getIDList()
         if not edges:
@@ -486,6 +497,7 @@ class UAVSimulation:
                             dt_targets[mv["uav_id"]] = mv
 
                 for uav_id in range(T):
+                    self.publish_state(f"uav{uav_id}", uav_state[str(uav_id)])
                     if uav_state[str(uav_id)] == "STANDBY":
                         veh_id = f"uav{uav_id}"
                         home = self.uav_home[uav_id]

@@ -417,6 +417,9 @@ OPTIMIZER_NAME = "K-Means ponderado por SINR"
 ENABLE_TOPOLOGY_OPTIMIZATION = True
 OPTIMIZATION_INTERVAL = 10.0        # Segundos de simulacion entre optimizaciones
 OPTIMIZATION_MIN_DISTANCE = 50.0    # Distancia minima (m) para enviar MOVE
+# Estados del UAV (campo "uav_state" del GNB_Report) que lo excluyen de los
+# calculos. MISSION, UNKNOWN o sin campo (versiones antiguas) cuentan como activos
+INACTIVE_UAV_STATES = ("RETURNING", "CHARGING", "STANDBY", "ABSENT")
 OPTIMIZATION_SPEED = 20.0           # Velocidad de vuelo del dron (m/s)
 OPTIMIZATION_MIN_UES = 1            # Minimo de UEs para considerar optimizacion
 
@@ -471,6 +474,11 @@ class DigitalTwin:
     @staticmethod
     def _dist(x1, y1, x2, y2):
         return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+
+    @staticmethod
+    def _gnb_is_active(nd):
+        """False si el UAV que lleva el gNodeB no esta en mision."""
+        return nd.get('uav_state', 'UNKNOWN') not in INACTIVE_UAV_STATES
 
     # ------------------------------------------------- ingesta de telemetria UE
     def handleUE_ReportMessage(self, message):
@@ -545,19 +553,22 @@ class DigitalTwin:
             ts = data.get("timestamp")
             pos = data.get("position", {})
             connected = data.get("connected_ues", [])
+            uav_state = data.get("uav_state", "UNKNOWN")
             num_conn = data.get("num_connected", 0)
             x, y, z = pos.get("x", 0), pos.get("y", 0), pos.get("z", 0)
 
             print(f"\n[Servidor] GNB_Report from gNodeB[{gnb_index}] (id={gnb_id})")
             print(f"  Time: {ts:.2f}s | Pos: ({x:.1f}, {y:.1f}, {z:.1f})")
             print(f"  Connected UEs: {num_conn} {connected if connected else ''}")
+            print(f"  UAV state: {uav_state}")
 
             if gnb_id not in self.gnb_data:
                 self.gnb_data[gnb_id] = []
             self.gnb_data[gnb_id].append({
                 'timestamp': ts, 'index': gnb_index,
                 'x': x, 'y': y, 'z': z,
-                'connected_ues': connected, 'num_connected': num_conn})
+                'connected_ues': connected, 'num_connected': num_conn,
+                'uav_state': uav_state})
 
             gnb_node = f"gNB_{gnb_id}"
             self.G.add_node(gnb_node,
@@ -565,6 +576,7 @@ class DigitalTwin:
                             gnb_index=int(gnb_index),
                             pos_x=float(x), pos_y=float(y), pos_z=float(z),
                             num_connected=int(num_conn),
+                            uav_state=str(uav_state),
                             connected_ues_str=json.dumps(connected),
                             total_reports=int(len(self.gnb_data[gnb_id])),
                             last_update=float(ts) if ts else 0.0)
@@ -664,10 +676,18 @@ class DigitalTwin:
         return np.array(pts, dtype=float), np.array(wts, dtype=float)
 
     def _get_mobile_gnbs(self):
-        """En este escenario todas las estaciones son moviles."""
+        """
+        gNodeBs moviles disponibles: todos los que van en un UAV en mision. Los
+        que estan volviendo, cargando, en standby o fuera de SUMO no cuentan
+        como cluster, asi K = numero de UAVs activos.
+        """
         drones = []
         for node_name, nd in self.G.nodes(data=True):
             if nd.get('node_type') != 'gnb':
+                continue
+            if not self._gnb_is_active(nd):
+                print(f"[KMEANS] gNodeB[{nd.get('gnb_index')}]: UAV en "
+                      f"{nd.get('uav_state')}, se excluye del calculo")
                 continue
             drones.append({'node_name': node_name,
                            'gnb_id': nd.get('gnb_id'),
