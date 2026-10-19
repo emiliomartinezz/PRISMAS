@@ -8,160 +8,216 @@
 // los UAV, solo los sigue.
 //
 
-#include "inet/common/INETDefs.h"
-#include <iostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <cstring>
-#include <errno.h>
 #include "Tcpclient.h"
+
+#include <mosquitto.h>
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
+#include <regex>
 
 Define_Module(TcpClient);
 
-// Variables globales para el socket real del cliente
-static int realClientFd = -1;
-static bool isConnected = false;
+static const int KEEPALIVE_S = 30;
+static const auto RECONNECT_EVERY = std::chrono::seconds(1);
+
+// ---------------------------------------------------------------- callbacks
+// libmosquitto los llama desde dentro de mosquitto_loop(), es decir, en el
+// hilo de OMNeT++.
+
+static void onConnect(struct mosquitto *, void *obj, int rc)
+{
+    static_cast<TcpClient *>(obj)->onBrokerConnected(rc);
+}
+
+static void onDisconnect(struct mosquitto *, void *obj, int rc)
+{
+    static_cast<TcpClient *>(obj)->onBrokerDisconnected(rc);
+}
+
+void TcpClient::onBrokerConnected(int rc)
+{
+    if (rc == 0) {
+        brokerConnected = true;
+        std::cout << "[MQTT] Conectado al broker " << brokerHost << ":" << brokerPort << std::endl;
+    }
+    else {
+        brokerConnected = false;
+        std::cerr << "[MQTT] El broker rechazo la conexion: "
+                  << mosquitto_connack_string(rc) << std::endl;
+    }
+}
+
+void TcpClient::onBrokerDisconnected(int rc)
+{
+    brokerConnected = false;
+    if (rc != 0)
+        std::cerr << "[MQTT] Conexion con el broker perdida; reintentando..." << std::endl;
+}
+
+// --------------------------------------------------------------------- ciclo
 
 void TcpClient::initialize()
 {
-    const char *SERVER_IP = "127.0.0.1";
-    const int SERVER_PORT = 50000;
+    brokerHost = par("brokerHost").stdstringValue();
+    brokerPort = par("brokerPort");
+    topicPrefix = par("topicPrefix").stdstringValue();
 
-    realClientFd = ::socket(AF_INET, SOCK_STREAM, 0);
-    if (realClientFd < 0) {
-        std::cerr << "[Cliente] Error creando socket: " << strerror(errno) << std::endl;
+    mosquitto_lib_init();
+
+    std::string clientId = topicPrefix + "-omnet-" + std::to_string(::getpid());
+    mosq = mosquitto_new(clientId.c_str(), true, this);
+    if (!mosq) {
+        std::cerr << "[MQTT] No se pudo crear el cliente MQTT. "
+                     "La telemetria NO se reenviara." << std::endl;
         return;
     }
+    mosquitto_connect_callback_set(mosq, onConnect);
+    mosquitto_disconnect_callback_set(mosq, onDisconnect);
 
-    // No bloqueante: OMNeT++ es monohilo
-    ::fcntl(realClientFd, F_SETFL, O_NONBLOCK);
+    // Credenciales SOLO por variables de entorno (mqtt.env, fuera de git), para
+    // que no acaben en omnetpp.ini. Sin ellas se conecta sin usuario.
+    const char *user = std::getenv("PRISMAS_MQTT_USER");
+    const char *pass = std::getenv("PRISMAS_MQTT_PASS");
+    bool withAuth = user && *user;
+    if (withAuth)
+        mosquitto_username_pw_set(mosq, user, pass ? pass : "");
 
-    struct sockaddr_in serverAddr;
-    memset(&serverAddr, 0, sizeof(serverAddr));
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(SERVER_PORT);
+    std::cout << "[MQTT] Conectando al broker " << brokerHost << ":" << brokerPort
+              << " (prefijo de topics '" << topicPrefix << "', "
+              << (withAuth ? std::string("usuario '") + user + "'" : std::string("sin credenciales"))
+              << ")" << std::endl;
 
-    if (inet_pton(AF_INET, SERVER_IP, &serverAddr.sin_addr) <= 0) {
-        std::cerr << "[Cliente] Direccion IP invalida" << std::endl;
-        ::close(realClientFd);
-        realClientFd = -1;
-        return;
+    // Conexion no bloqueante: la termina mosquitto_loop()
+    lastReconnectAttempt = std::chrono::steady_clock::now();
+    int rc = mosquitto_connect_async(mosq, brokerHost.c_str(), brokerPort, KEEPALIVE_S);
+    if (rc != MOSQ_ERR_SUCCESS)
+        std::cerr << "[MQTT] Broker no disponible (" << mosquitto_strerror(rc)
+                  << "); se reintentara cada segundo" << std::endl;
+
+    // Esperar un poco a la conexion para no perder los primeros reports. Si el
+    // broker no esta, la simulacion arranca igualmente.
+    double waitLimit = par("connectTimeout").doubleValue();
+    auto deadline = std::chrono::steady_clock::now() +
+                    std::chrono::milliseconds(static_cast<long>(waitLimit * 1000));
+    while (!brokerConnected && std::chrono::steady_clock::now() < deadline) {
+        serviceMqtt();
+        ::usleep(20000);
     }
+    if (!brokerConnected)
+        std::cerr << "[MQTT] El broker aun no responde; la simulacion arranca igualmente "
+                     "y la telemetria se enviara cuando conecte" << std::endl;
 
-    int ret = ::connect(realClientFd, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
-    if (ret < 0 && errno != EINPROGRESS) {
-        std::cerr << "[Cliente] Error conectando: " << strerror(errno) << std::endl;
-        ::close(realClientFd);
-        realClientFd = -1;
-        return;
-    }
-
-    std::cout << "[Cliente] Intentando conexion con "
-              << SERVER_IP << ":" << SERVER_PORT
-              << " (el gemelo debe estar escuchando ANTES de lanzar OMNeT++)" << std::endl;
-
-    cMessage *checkMsg = new cMessage("checkConnection");
+    checkMsg = new cMessage("checkConnection");
     scheduleAt(simTime() + 0.1, checkMsg);
 }
 
 void TcpClient::handleMessage(cMessage *msg)
 {
-    if (!msg->isSelfMessage() || strcmp(msg->getName(), "checkConnection") != 0) {
+    if (msg != checkMsg) {   // este modulo no recibe otros mensajes
         delete msg;
         return;
     }
+    serviceMqtt();
+    scheduleAt(simTime() + 0.1, checkMsg);
+}
 
-    if (realClientFd < 0) {
-        delete msg;   // sin socket no hay nada que vigilar
+void TcpClient::serviceMqtt()
+{
+    if (!mosq)
         return;
+
+    // Atiende la red sin bloquear: envia lo pendiente, lee CONNACK/PINGRESP
+    // y manda el keepalive cuando toca.
+    int rc = mosquitto_loop(mosq, 0, 1);
+    if (rc == MOSQ_ERR_SUCCESS)
+        return;
+
+    // Sin conexion (broker caido, aun no estaba, o se perdio): reintentar
+    brokerConnected = false;
+    auto now = std::chrono::steady_clock::now();
+    if (now - lastReconnectAttempt >= RECONNECT_EVERY) {
+        lastReconnectAttempt = now;
+        mosquitto_reconnect_async(mosq);
     }
+}
 
-    // 1) ¿Se ha completado el connect() no bloqueante?
-    if (!isConnected) {
-        int error = 0;
-        socklen_t len = sizeof(error);
-        int ret = ::getsockopt(realClientFd, SOL_SOCKET, SO_ERROR, &error, &len);
+// --------------------------------------------------------------------- envio
 
-        if (ret == 0 && error == 0) {
-            // Comprobamos que realmente esta conectado (no solo "en curso")
-            struct sockaddr_in peer;
-            socklen_t plen = sizeof(peer);
-            if (::getpeername(realClientFd, (struct sockaddr *)&peer, &plen) == 0) {
-                isConnected = true;
-                std::cout << "[Cliente] Conexion establecida con el gemelo digital" << std::endl;
-            }
-        }
-        else if (ret == 0 && error != 0) {
-            std::cerr << "[Cliente] No se pudo conectar con el gemelo: " << strerror(error)
-                      << ". La telemetria NO se reenviara." << std::endl;
-            ::close(realClientFd);
-            realClientFd = -1;
-            delete msg;
-            return;
-        }
+std::string TcpClient::topicFor(const std::string& payload) const
+{
+    static const std::regex ueIdx("\"ue_index\"\\s*:\\s*(-?\\d+)");
+    static const std::regex gnbIdx("\"gnb_index\"\\s*:\\s*(-?\\d+)");
+    std::smatch m;
+
+    if (payload.find("\"UE_Report\"") != std::string::npos) {
+        std::string idx = std::regex_search(payload, m, ueIdx) ? m[1].str() : "unknown";
+        return topicPrefix + "/omnet/ue/" + idx + "/report";
     }
-
-    // 2) Leer (y descartar) lo que mande el gemelo
-    if (isConnected) {
-        char buffer[4096];
-        ssize_t bytesRead = ::recv(realClientFd, buffer, sizeof(buffer) - 1, 0);
-
-        if (bytesRead > 0) {
-            buffer[bytesRead] = '\0';
-            std::string receivedMsg(buffer);
-
-            if (receivedMsg == "SERVER_CLOSED") {
-                std::cout << "[Cliente] El gemelo cerro la conexion" << std::endl;
-                ::close(realClientFd);
-                realClientFd = -1;
-                isConnected = false;
-                delete msg;
-                return;
-            }
-
-            std::cout << "[Cliente] Mensaje del gemelo ignorado en paso 1 "
-                         "(los UAV los mueve SUMO-UAV-Py): "
-                      << receivedMsg.substr(0, 120) << std::endl;
-        }
-        else if (bytesRead == 0) {
-            std::cout << "[Cliente] Gemelo desconectado" << std::endl;
-            ::close(realClientFd);
-            realClientFd = -1;
-            isConnected = false;
-            delete msg;
-            return;
-        }
+    if (payload.find("\"GNB_Report\"") != std::string::npos) {
+        std::string idx = std::regex_search(payload, m, gnbIdx) ? m[1].str() : "unknown";
+        return topicPrefix + "/omnet/gnb/" + idx + "/report";
     }
-
-    scheduleAt(simTime() + 0.1, msg);
+    return topicPrefix + "/omnet/other";
 }
 
 void TcpClient::sendToServer(const std::string& data)
 {
-    if (!isConnected || realClientFd < 0)
+    if (!mosq)
         return;
 
-    // MSG_NOSIGNAL: si el gemelo se cae, send() devuelve EPIPE en lugar de
-    // lanzar SIGPIPE y matar el proceso de OMNeT++.
-    ssize_t sent = ::send(realClientFd, data.c_str(), data.size(), MSG_NOSIGNAL);
-
-    if (sent < 0 && errno != EAGAIN && errno != EWOULDBLOCK) {
-        std::cerr << "[Cliente] Error enviando al gemelo: " << strerror(errno) << std::endl;
-        ::close(realClientFd);
-        realClientFd = -1;
-        isConnected = false;
+    // Sin broker no se acumula nada: la telemetria es periodica y una muestra
+    // vieja no le sirve al gemelo.
+    if (!brokerConnected) {
+        if (dropped++ % 500 == 0)
+            std::cerr << "[MQTT] Sin conexion con el broker: telemetria descartada ("
+                      << dropped << " mensajes)" << std::endl;
+        return;
     }
+
+    std::string topic = topicFor(data);
+    int rc = mosquitto_publish(mosq, nullptr, topic.c_str(),
+                               static_cast<int>(data.size()), data.data(),
+                               0 /* QoS */, false /* retain */);
+    if (rc == MOSQ_ERR_SUCCESS) {
+        published++;
+    }
+    else {
+        brokerConnected = false;   // serviceMqtt() se encargara de reconectar
+        if (dropped++ % 500 == 0)
+            std::cerr << "[MQTT] Error publicando en " << topic << ": "
+                      << mosquitto_strerror(rc) << std::endl;
+    }
+}
+
+// ------------------------------------------------------------------- cierre
+
+void TcpClient::shutdownMqtt()
+{
+    if (!mosq)
+        return;
+    if (brokerConnected) {
+        mosquitto_loop(mosq, 100, 1);   // vaciar lo que quede por enviar
+        mosquitto_disconnect(mosq);
+        mosquitto_loop(mosq, 100, 1);
+    }
+    mosquitto_destroy(mosq);
+    mosq = nullptr;
+    mosquitto_lib_cleanup();
+    brokerConnected = false;
 }
 
 void TcpClient::finish()
 {
-    if (realClientFd >= 0) {
-        ::close(realClientFd);
-        realClientFd = -1;
-    }
-    isConnected = false;
-    std::cout << "[Cliente] Cerrando cliente TCP" << std::endl;
+    recordScalar("mqttPublished", published);
+    recordScalar("mqttDropped", dropped);
+    std::cout << "[MQTT] Fin: " << published << " mensajes publicados, "
+              << dropped << " descartados" << std::endl;
+    shutdownMqtt();
+}
+
+TcpClient::~TcpClient()
+{
+    cancelAndDelete(checkMsg);
+    shutdownMqtt();
 }

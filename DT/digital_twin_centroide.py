@@ -769,6 +769,53 @@ class DigitalTwin:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
+    def run_mqtt_loop(self):
+        """
+        Lee la telemetria que llega por MQTT (UE_Report/GNB_Report), actualiza
+        el grafo y, cada OPTIMIZATION_INTERVAL segundos de simulacion, ejecuta el
+        algoritmo de reposicionamiento y publica un MOVE_BATCH para el plugin.
+        Hace lo mismo que run_tcp_server, pero sin sockets ni respuestas ACK.
+        """
+        print("=" * 60)
+        print(f"[MQTT] Broker: {self.plugin.host}:{self.plugin.port}")
+        print(f"[MQTT] Telemetria: {self.plugin.topic_telemetry}")
+        print(f"[MQTT] Ordenes:    {self.plugin.topic_moves}")
+        print(f"[MQTT] Session: {SESSION_TIMESTAMP}")
+        print(f"[MQTT] Algoritmo de reposicionamiento: {OPTIMIZER_NAME}")
+        if ENABLE_TOPOLOGY_OPTIMIZATION:
+            print(f"[MQTT] Optimizacion: cada {OPTIMIZATION_INTERVAL}s sim, "
+                  f"dist_min={OPTIMIZATION_MIN_DISTANCE}m, "
+                  f"speed={OPTIMIZATION_SPEED} m/s")
+        else:
+            print("[MQTT] Optimizacion de topologia DESACTIVADA")
+        print("=" * 60)
+ 
+        while self.server_running:
+            messages = self.plugin.get_telemetry(timeout=1.0)
+            if not messages:
+                continue
+ 
+            for msg in messages:
+                self.process_message(msg)
+ 
+            if self.should_optimize():
+                moves = self.compute_optimal_positions()
+                if moves:
+                    print("\n" + "*" * 60)
+                    print("  [OPTIM] Ejecutando reposicionamiento")
+                    print(f"  [OPTIM] Sim time: {self.grid.last_update_time:.2f}s")
+                    print(f"  [OPTIM] Estaciones a mover: {len(moves)}")
+                    print("*" * 60 + "\n")
+                    move_cmds = [{'gnb_index': m['gnb_index'],
+                                  'x': m['x'], 'y': m['y'], 'z': m['z'],
+                                  'speed': m['speed']} for m in moves]
+                    self.send_move_batch(move_cmds)
+                else:
+                    print(f"[OPTIM] Sin movimientos necesarios "
+                          f"(t={self.grid.last_update_time:.1f}s)")
+                self.last_optimization_sim_time = self.grid.last_update_time
+ 
+
     def run_tcp_server(self):
         """
         Servidor TCP del gemelo digital. Recibe UE_Report/GNB_Report, actualiza el grafo y,
@@ -1220,7 +1267,7 @@ def main():
 
     dt.plugin.start()
     # Servidor TCP (metodo de la clase) en hilo secundario
-    tcp_thread = threading.Thread(target=dt.run_tcp_server, daemon=True)
+    tcp_thread = threading.Thread(target=dt.run_mqtt_loop, daemon=True)
     tcp_thread.start()
 
     # Analisis en hilo secundario

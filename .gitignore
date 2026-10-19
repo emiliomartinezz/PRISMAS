@@ -18,7 +18,7 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
-
+mqtt.env
 # ---------- Plugin de UAVs (SUMO-UAV-Py/) ----------
 # Entorno virtual de Python (en tu repo actual ocupa ~340 MB)
 SUMO-UAV-Py/.venv/

@@ -1,47 +1,65 @@
+
 """
-dt_link.py — enlace del plugin SUMO-UAV-Py con el gemelo digital.
-
-El gemelo escucha en un puerto aparte del que usa OMNeT++ (por defecto el
-50001) y envia ordenes de reposicionamiento. El plugin se conecta como
-cliente, lee sin bloquear en cada paso de simulacion y devuelve las ordenes
-ya listas para aplicar.
-
-Formato que manda el gemelo (una linea JSON por mensaje, terminada en \n):
-
+dt_link.py — enlace MQTT del plugin SUMO-UAV-Py con el gemelo digital.
+ 
+Antes el plugin se conectaba por TCP al puerto 50001 del gemelo. Ahora se
+suscribe en el broker MQTT al topic donde el gemelo publica las ordenes:
+ 
+    prismas/dt/moves   (QoS 1)
+ 
     {"type": "MOVE_BATCH",
      "moves": [{"gnb_index": 1, "x": 562.7, "y": 689.0, "z": 60.0, "speed": 20.0}, ...]}
-
+ 
+ 
 Las coordenadas vienen en el sistema de OMNeT++, que Veins obtiene a partir
 del de SUMO invirtiendo el eje Y y sumando un margen. Aqui se deshace esa
 transformacion antes de devolverlas.
+ 
+Requiere: pip install paho-mqtt  (version 2.x)
 """
 
-import socket
-import errno
 
+
+import os
+import queue
+import threading
+ 
 try:
     import ujson as json
 except ImportError:
     import json
-
-
+ 
+import paho.mqtt.client as mqtt
+ 
+ 
 class DTLink:
-
-    def __init__(self, host="127.0.0.1", port=50001, margin=250.0):
+ 
+    def __init__(self, host="127.0.0.1", port=1883, margin=250.0, prefix="prismas"):
         self.host = host
-        self.port = port
+        self.port = int(port)
         self.margin = float(margin)
-        self.sock = None
-        self.connected = False
-        self.buffer = b""
-
+        self.topic_moves = f"{prefix}/dt/moves"
+        self.client_id = f"{prefix}-plugin-{os.getpid()}"
+ 
+        self.client = None
+        self._queue = queue.Queue()
+        self._connected = threading.Event()
+ 
         # Limites de la red SUMO, para convertir coordenadas.
         # Se rellenan con set_net_boundary() una vez TraCI esta en marcha.
         self.net_xmin = 0.0
         self.net_ymax = 0.0
-
+ 
+        if self.port in (50000, 50001):
+            print(f"[DTLink] AVISO: el puerto {self.port} es el del antiguo enlace TCP. "
+                  f"Pon en config.json \"DT Port\": 1883 (puerto del broker MQTT)")
+ 
+    @property
+    def connected(self):
+        return self._connected.is_set()
+ 
     # ------------------------------------------------------------------ setup
-
+ 
     def set_net_boundary(self, boundary):
         """boundary = traci.simulation.getNetBoundary() -> ((xmin,ymin),(xmax,ymax))"""
         (xmin, _ymin), (_xmax, ymax) = boundary
@@ -49,37 +67,53 @@ class DTLink:
         self.net_ymax = float(ymax)
         print(f"[DTLink] Limites de la red: xmin={self.net_xmin:.2f} ymax={self.net_ymax:.2f}"
               f" (margin={self.margin})")
-
+ 
     def connect(self):
-        """Conexion no bloqueante. Si el gemelo no esta escuchando, se avisa y
-        la simulacion sigue sin ordenes."""
+        """Conexion en segundo plano. Si el broker no esta, paho reintenta solo
+        y la simulacion sigue sin ordenes mientras tanto."""
         try:
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.sock.setblocking(False)
-            err = self.sock.connect_ex((self.host, self.port))
-            if err in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                print(f"[DTLink] Conectando con el gemelo en {self.host}:{self.port}")
-                return True
-            print(f"[DTLink] No se pudo conectar ({errno.errorcode.get(err, err)}). "
-                  f"La simulacion seguira sin ordenes del gemelo.")
-            self._drop()
-            return False
+            self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,
+                                      client_id=self.client_id)
+            self.client.on_connect = self._on_connect
+            self.client.on_disconnect = self._on_disconnect
+            self.client.on_message = self._on_message
+            self.client.reconnect_delay_set(min_delay=1, max_delay=5)
+            # Credenciales SOLO por variables de entorno (mqtt.env, fuera de git)
+            user = os.environ.get("PRISMAS_MQTT_USER", "")
+            if user:
+                self.client.username_pw_set(user, os.environ.get("PRISMAS_MQTT_PASS", ""))
+            self.client.connect_async(self.host, self.port, keepalive=30)
+            self.client.loop_start()
+            auth = f"usuario '{user}'" if user else "sin credenciales"
+            print(f"[DTLink] Conectando al broker MQTT {self.host}:{self.port} ({auth})")
+            return True
         except Exception as e:
-            print(f"[DTLink] Error creando el socket: {e}")
-            self._drop()
+            print(f"[DTLink] Error creando el cliente MQTT: {e}. "
+                  f"La simulacion seguira sin ordenes del gemelo.")
+            self.client = None
             return False
-
-    def _drop(self):
-        if self.sock is not None:
-            try:
-                self.sock.close()
-            except Exception:
-                pass
-        self.sock = None
-        self.connected = False
-
+ 
+    def _on_connect(self, client, userdata, flags, reason_code, properties):
+        if reason_code.is_failure:
+            print(f"[DTLink] El broker rechazo la conexion: {reason_code}")
+            return
+        client.subscribe(self.topic_moves, qos=1)
+        self._connected.set()
+        print(f"[DTLink] Conectado al broker. Esperando ordenes en '{self.topic_moves}'")
+ 
+    def _on_disconnect(self, client, userdata, flags, reason_code, properties):
+        self._connected.clear()
+        if reason_code.is_failure:
+            print(f"[DTLink] Conexion con el broker perdida ({reason_code}); reintentando...")
+        else:
+            print("[DTLink] Desconectado del broker")
+ 
+    def _on_message(self, client, userdata, msg):
+        # Hilo de red de paho: solo se encola, el parseo se hace en poll()
+        self._queue.put(msg.payload)
+ 
     # ------------------------------------------------------------- conversion
-
+ 
     def omnet_to_sumo(self, x_omnet, y_omnet):
         """Inversa de la transformacion de Veins:
               x_omnet = x_sumo - net_xmin + margin
@@ -88,48 +122,21 @@ class DTLink:
         x_sumo = x_omnet + self.net_xmin - self.margin
         y_sumo = self.net_ymax - y_omnet + self.margin
         return x_sumo, y_sumo
-
+ 
     # ----------------------------------------------------------------- lectura
-
+ 
     def poll(self):
-        """Lee lo que haya llegado y devuelve una lista de ordenes ya
-        convertidas: [{'uav_id': int, 'x': float, 'y': float, 'z': float,
-        'speed': float}, ...]. Nunca bloquea."""
-        if self.sock is None:
-            return []
-
-        # Confirmar que el connect() no bloqueante ha terminado
-        if not self.connected:
-            try:
-                self.sock.getpeername()
-                self.connected = True
-                print("[DTLink] Conectado con el gemelo digital")
-            except OSError:
-                return []
-
-        try:
-            while True:
-                chunk = self.sock.recv(8192)
-                if not chunk:
-                    print("[DTLink] El gemelo ha cerrado la conexion")
-                    self._drop()
-                    return []
-                self.buffer += chunk
-        except BlockingIOError:
-            pass
-        except OSError as e:
-            print(f"[DTLink] Error leyendo del gemelo: {e}")
-            self._drop()
-            return []
-
+        """Devuelve las ordenes llegadas desde la ultima llamada, ya convertidas:
+        [{'uav_id': int, 'x': float, 'y': float, 'z': float, 'speed': float}, ...].
+        Nunca bloquea."""
         moves = []
-        while b"\n" in self.buffer:
-            line, self.buffer = self.buffer.split(b"\n", 1)
-            line = line.strip()
-            if not line:
-                continue
+        while True:
             try:
-                msg = json.loads(line.decode("utf-8"))
+                payload = self._queue.get_nowait()
+            except queue.Empty:
+                break
+            try:
+                msg = json.loads(payload.decode("utf-8"))
             except Exception as e:
                 print(f"[DTLink] Mensaje ilegible descartado: {e}")
                 continue
@@ -148,6 +155,14 @@ class DTLink:
                 except (KeyError, ValueError, TypeError) as e:
                     print(f"[DTLink] Orden mal formada, descartada: {e}")
         return moves
-
+ 
     def close(self):
-        self._drop()
+        if self.client is not None:
+            try:
+                self.client.disconnect()
+                self.client.loop_stop()
+            except Exception:
+                pass
+        self.client = None
+        self._connected.clear()
+ 
