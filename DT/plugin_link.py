@@ -12,7 +12,13 @@ Ahora el gemelo es un cliente mas del broker MQTT:
     prismas/omnet/gnb/<gnb_index>/report   GNB_Report  (OMNeT++ -> gemelo, QoS 0)
     prismas/dt/moves                       MOVE_BATCH  (gemelo -> plugin,  QoS 1)
  
+
+Por prismas/dt/moves salen los tres tipos de orden, distinguidos por "type":
  
+    {"type": "MOVE_BATCH", "moves": [{"gnb_index", "x", "y", "z", "speed"}, ...]}
+    {"type": "DEPLOY", "gnb_index": i, "x": .., "y": .., "z": .., "speed": ..}
+    {"type": "RECALL", "gnb_index": i}
+
 Los mensajes son los mismos JSON que antes, uno por mensaje MQTT (MQTT ya
 respeta los limites de cada mensaje, no hace falta separarlos a mano).
  
@@ -22,6 +28,7 @@ o lanzar el gemelo con:  PRISMAS_MQTT_HOST=<ip> python3 digital_twin_xxx.py
 Requiere: pip install paho-mqtt  (version 2.x)
 """
  
+
 import json
 import os
 import queue
@@ -123,19 +130,35 @@ class PluginLink:
  
     # ------------------------------------------------------------------ envio
  
+    def _publish(self, msg):
+        """Publica una orden (dict) en el topic de ordenes. True si el broker
+        la acepta para envio."""
+        if not self.is_connected:
+            print(f"[PluginLink] Sin conexion con el broker: no se envia {msg.get('type')}")
+            return False
+        info = self.client.publish(self.topic_moves, json.dumps(msg), qos=1)
+        if info.rc != mqtt.MQTT_ERR_SUCCESS:
+            print(f"[PluginLink] Error publicando {msg.get('type')}: {mqtt.error_string(info.rc)}")
+            return False
+        return True
+ 
     def send_moves(self, move_list):
         """move_list: [{'gnb_index': i, 'x': ..., 'y': ..., 'z': ..., 'speed': ...}]"""
         if not move_list:
             return False
-        if not self.is_connected:
-            print("[PluginLink] Sin conexion con el broker: no se envian ordenes")
-            return False
-        payload = json.dumps({"type": "MOVE_BATCH", "moves": move_list})
-        info = self.client.publish(self.topic_moves, payload, qos=1)
-        if info.rc != mqtt.MQTT_ERR_SUCCESS:
-            print(f"[PluginLink] Error publicando ordenes: {mqtt.error_string(info.rc)}")
-            return False
-        return True
+        return self._publish({"type": "MOVE_BATCH", "moves": move_list})
+ 
+    def send_deploy(self, gnb_index, x, y, z=0.0, speed=0.0):
+        """Despierta el UAV que lleva gNodeB[gnb_index] y lo manda a (x, y), en
+        coordenadas OMNeT++. z <= 0 deja que el plugin use su altura de despliegue."""
+        return self._publish({"type": "DEPLOY", "gnb_index": int(gnb_index),
+                              "x": float(x), "y": float(y), "z": float(z),
+                              "speed": float(speed)})
+ 
+    def send_recall(self, gnb_index):
+        """Manda a la base el UAV que lleva gNodeB[gnb_index]. Tras cargar
+        queda en STANDBY."""
+        return self._publish({"type": "RECALL", "gnb_index": int(gnb_index)})
  
     def close(self):
         try:
@@ -144,4 +167,4 @@ class PluginLink:
         except Exception:
             pass
         self._connected.clear()
- 
+

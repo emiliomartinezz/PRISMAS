@@ -28,6 +28,7 @@ from matplotlib.colors import ListedColormap
 from datetime import datetime
 from collections import defaultdict
 from plugin_link import PluginLink
+from fleet_manager import FleetManager
 
 # ================= CONFIGURACION COMUN =================
 
@@ -448,6 +449,7 @@ class DigitalTwin:
         # Estado del servidor TCP (integrado en la clase)
         self.conn = None
         self.plugin = PluginLink()
+        self.fleet = FleetManager(self)
         self.addr = None
         self.server_running = True
 
@@ -545,6 +547,10 @@ class DigitalTwin:
             pos = data.get("position", {})
             connected = data.get("connected_ues", [])
             uav_state = data.get("uav_state", "UNKNOWN")
+            
+            if ts is not None and (self.grid.last_update_time is None or ts > self.grid.last_update_time):
+                self.grid.last_update_time = ts
+
             num_conn = data.get("num_connected", 0)
             x, y, z = pos.get("x", 0), pos.get("y", 0), pos.get("z", 0)
 
@@ -589,7 +595,7 @@ class DigitalTwin:
     def detect_coverage_holes(self):
         return self.hole_detector.detect()
 
-    # ----------------------------------------------- envio de comandos a OMNeT++
+    # ----------------------------------------------- envio de comandos a SUMO-UAV-Py
     def send_move_batch(self, move_list):
         if not self.plugin.is_connected:
             print("[DT] El plugin no esta conectado: no se envian ordenes")
@@ -621,7 +627,7 @@ class DigitalTwin:
                     "reason": "topology_optimization"})
 
             print("\n" + "=" * 60)
-            print("  >>> MOVE_BATCH ENVIADO A OMNET++ (OPTIMIZACION) <<<")
+            print("  >>> MOVE_BATCH ENVIADO A SUMO-UAV-Py (OPTIMIZACION) <<<")
             print("=" * 60)
             for move in move_list:
                 print(f"  gNodeB[{move['gnb_index']}] -> "
@@ -797,7 +803,9 @@ class DigitalTwin:
  
             for msg in messages:
                 self.process_message(msg)
- 
+
+            self.fleet.update(self.grid.last_update_time)
+
             if self.should_optimize():
                 moves = self.compute_optimal_positions()
                 if moves:
@@ -964,7 +972,8 @@ class DigitalTwin:
             'coverage': stats,
             'qos': qos,
             'coverage_holes': self.hole_detector.get_summary(),
-            'move_commands': self.move_commands_log}
+            'move_commands': self.move_commands_log,
+            'fleet_events': self.fleet.events}
 
     def print_summary(self):
         report = self.get_summary_report()

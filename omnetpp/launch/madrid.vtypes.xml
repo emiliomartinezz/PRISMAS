@@ -8,8 +8,8 @@
        guiShape="aircraft"/>
  
     <vTypeDistribution id="car_type">
-        <vType id="car_ue"    vClass="passenger" probability="0.1" color="0,200,0"/>
-        <vType id="car_plain" vClass="passenger" probability="0.9"/>
+        <vType id="car_ue"    vClass="passenger" probability="0.3" color="0,200,0"/>
+        <vType id="car_plain" vClass="passenger" probability="0.7"/>
     </vTypeDistribution>
 </vTypes>
 

@@ -135,6 +135,8 @@ class UAVSimulation:
         self.dt_host = config.get('DT Host', '127.0.0.1')
         self.dt_port = config.get('DT Port', 50001)
         self.veins_margin = config.get('Veins Margin (m)', 250)
+        self.on_demand = config.get('On Demand Mode', False)
+        self.deploy_altitude = config.get('Deploy Altitude (m)', None)
         self.mode = config.get('Input Mode', 'Offline')
         self.movement = config.get('Movement', 'Continuous')
         self.otimization_mode = config.get("Optimization Mode", False)
@@ -360,6 +362,26 @@ class UAVSimulation:
             except traci.TraCIException:
                 pass  # el UAV aun no existe o ya se elimino de SUMO
 
+    def send_uav_home(self, uav_id, step):
+        """Reescribe la ruta del UAV para que vuelva a su base desde donde esta."""
+        key = str(uav_id)
+        home = self.uav_home[uav_id]
+        t_now = step * self.simulation_step_length
+        times = self.time_list[uav_id]
+        if step in times:
+            idx = times.index(step)
+            curr_pos = self.uav_positions_list[uav_id][idx]
+            curr_angle = self.uav_yaw_angles_list[uav_id][idx]
+        else:
+            x, y = traci.vehicle.getPosition(f"uav{uav_id}")
+            curr_pos = [x, y, home[2]]
+            curr_angle = 0
+        self.uav_data[key] = [
+            [t_now, curr_pos[0], curr_pos[1], curr_pos[2], curr_angle],
+            [t_now + 1, home[0], home[1], home[2], 0]
+        ]
+        self.uav_positions_list, self.time_list, self.uav_yaw_angles_list = self.uav_path_data()
+
     def create_uav_vehicles(self):
         edges = traci.edge.getIDList()
         if not edges:
@@ -439,6 +461,8 @@ class UAVSimulation:
         return_sent = {str(i): False for i in range(T)}
         #Flag used to avoid multiple warnings for the same UAV when it reaches the battery life threshold and is removed from the simulation
         stop_sent = {str(i): False for i in range(T)}
+        #Marca que un UAV ha pedido relevo, para no lanzarlo en cada paso
+        relay_sent = {str(i): False for i in range(T)}
         charging_time_steps = int(200 / self.simulation_step_length)
         charging_counter = {str(i): 0 for i in range(T)}
         # Track the original-path time at which the UAV left its mission
@@ -447,7 +471,9 @@ class UAVSimulation:
         step_times = []
         uav_state = {}
         for i in range(T):
-            if self.relay_mode and i >= N:
+            if self.on_demand:
+                uav_state[str(i)] = "STANDBY"
+            elif self.relay_mode and i >= N:
                 uav_state[str(i)] = "STANDBY"
             else:
                 uav_state[str(i)] = "MISSION"
@@ -473,8 +499,14 @@ class UAVSimulation:
 
             dt_cruise_z = {}
             for i in range(self.total_uavs):
-                zs = [wp[3] for wp in self.uav_data[str(i)]]
-                dt_cruise_z[i] = max(zs) if zs else 0.0
+                if self.deploy_altitude is not None:
+                    dt_cruise_z[i] = float(self.deploy_altitude)
+                else:
+                    zs = [wp[3] for wp in self.uav_data[str(i)]]
+                    z_max = max(zs) if zs else 0.0
+                    dt_cruise_z[i] = z_max if z_max > 0 else 100.0
+            dt_deploy = {}       # uav_id -> orden DEPLOY pendiente de aplicar
+            dt_recall = set()    # uav_id con orden RECALL pendiente
 
             if self.local_gui:
                 user_input_thread = threading.Thread(target=self.get_user_input)
@@ -492,11 +524,60 @@ class UAVSimulation:
                 step += 1
 
                 if self.dt_link is not None:
-                    for mv in self.dt_link.poll():
-                        if 0 <= mv["uav_id"] < T:
-                            dt_targets[mv["uav_id"]] = mv
+                    for cmd in self.dt_link.poll():
+                        uid = cmd["uav_id"]
+                        if not 0 <= uid < T:
+                            continue
+                        if cmd["cmd"] == "MOVE":
+                            dt_targets[uid] = cmd
+                        elif cmd["cmd"] == "DEPLOY":
+                            dt_deploy[uid] = cmd
+                            dt_recall.discard(uid)
+                            dt_targets.pop(uid, None)
+                        elif cmd["cmd"] == "RECALL":
+                            dt_recall.add(uid)
+                            dt_deploy.pop(uid, None)
+                            dt_targets.pop(uid, None)
 
                 for uav_id in range(T):
+                    key = str(uav_id)
+                    if uav_id in dt_deploy:
+                        cmd = dt_deploy.pop(uav_id)
+                        partner_flying = (self.relay_mode and
+                                          uav_state[str(get_partner(uav_id))] == "MISSION")
+                        if partner_flying:
+                            print(f"[DT] DEPLOY ignorado: la pareja de UAV {uav_id} "
+                                  f"(UAV {get_partner(uav_id)}) ya esta en mision")
+                        elif uav_state[key] == "STANDBY":
+                            home = self.uav_home[uav_id]
+                            t_now = step * self.simulation_step_length
+                            z = cmd["z"] if cmd["z"] > 0 else dt_cruise_z[uav_id]
+                            self.uav_data[key] = [
+                                [t_now, home[0], home[1], home[2], 0],
+                                [t_now + 1, cmd["x"], cmd["y"], z, 0]
+                            ]
+                            self.uav_positions_list, self.time_list, self.uav_yaw_angles_list = self.uav_path_data()
+                            battery_life_steps[key] = 0   # sale de la base con la bateria llena
+                            warning_sent[key] = False
+                            return_sent[key] = False
+                            stop_sent[key] = False
+                            relay_sent[key] = False
+                            uav_state[key] = "MISSION"
+                            print(f"[DT] DEPLOY UAV {uav_id} -> ({cmd['x']:.1f}, {cmd['y']:.1f}, {z:.1f}) SUMO")
+                        else:
+                            print(f"[DT] DEPLOY ignorado: UAV {uav_id} esta en {uav_state[key]}")
+
+                    if uav_id in dt_recall:
+                        dt_recall.discard(uav_id)
+                        if uav_state[key] == "MISSION":
+                            self.send_uav_home(uav_id, step)
+                            uav_state[key] = "RETURNING"
+                            return_sent[key] = True
+                            departure_time[key] = step * self.simulation_step_length
+                            print(f"[DT] RECALL UAV {uav_id}: vuelve a la base")
+                        else:
+                            print(f"[DT] RECALL ignorado: UAV {uav_id} esta en {uav_state[key]}")
+
                     self.publish_state(f"uav{uav_id}", uav_state[str(uav_id)])
                     if uav_state[str(uav_id)] == "STANDBY":
                         veh_id = f"uav{uav_id}"
@@ -533,7 +614,8 @@ class UAVSimulation:
                             warning_sent[str(uav_id)] = False
                             return_sent[str(uav_id)] = False
                             stop_sent[str(uav_id)] = False
-                            if self.relay_mode:
+                            relay_sent[str(uav_id)] = False
+                            if self.relay_mode or self.on_demand:
                                 uav_state[str(uav_id)] = "STANDBY"
                                 non_blocking_warning("Carga Completa",
                                     f"UAV {uav_id} cargado. En standby.")
@@ -805,36 +887,39 @@ class UAVSimulation:
                             battery_percentage =  500 / self.battery_life_steps * 100
                             non_blocking_warning("Battery Warning", f"Warning: UAV {uav_id} has {battery_percentage} percentage of battery left.")
                             warning_sent[str(uav_id)] = True
-                        if battery_life_steps[str(uav_id)] >= relay_threshold and self.relay_mode:
-                                partner_id = get_partner(uav_id)
-                                if uav_state[str(partner_id)] == "STANDBY":
-                                    uav_state[str(partner_id)] = "MISSION"
-                                    battery_life_steps[str(partner_id)] = 0
-                                    warning_sent[str(partner_id)] = False
-                                    return_sent[str(partner_id)] = False
-                                    stop_sent[str(partner_id)] = False
-                                    t_now = step * self.simulation_step_length
+                        if (battery_life_steps[str(uav_id)] >= relay_threshold and self.relay_mode
+                                and uav_state[str(uav_id)] == "MISSION" and not relay_sent[str(uav_id)]):
+                            partner_id = get_partner(uav_id)
+                            if uav_state[str(partner_id)] == "STANDBY":
+                                relay_sent[str(uav_id)] = True
+                                battery_life_steps[str(partner_id)] = 0
+                                warning_sent[str(partner_id)] = False
+                                return_sent[str(partner_id)] = False
+                                stop_sent[str(partner_id)] = False
+                                relay_sent[str(partner_id)] = False
+                                uav_state[str(partner_id)] = "MISSION"
+                                t_now = step * self.simulation_step_length
+                                curr_pos = uav_positions[step_idx]
+                                curr_angle = uav_yaw_angles[step_idx]
+                                partner_home = self.uav_home[partner_id]
+                                dt = self.simulation_step_length
+                                # Despega en t_now y va a la posicion actual del UAV relevado
+                                new_path = [
+                                    [0, partner_home[0], partner_home[1], partner_home[2], 0],
+                                    [t_now, partner_home[0], partner_home[1], partner_home[2], 0],
+                                    [t_now + dt, curr_pos[0], curr_pos[1], curr_pos[2], curr_angle]
+                                ]
+                                # Sin modo bajo demanda, despues sigue la ruta original.
+                                # Con el, se queda ahi y lo reposiciona el gemelo.
+                                if not self.on_demand:
                                     route_slot = partner_id % N
                                     original_data = copy.deepcopy(self.original_uav_data[str(route_slot)])
-                                    #Get the current position and angle of the UAV on its original path at the time it left the mission 
-                                    curr_pos = uav_positions[step_idx]
-                                    curr_angle = uav_yaw_angles[step_idx]
-                                    #Create a new path for the partner UAV that starts at the current position of the returning UAV and then follows the original path from the point where the first UAV left it, time-shifted to now
-                                    future = [p for p in original_data if p[0] > t_now ]
-                                    partner_home = self.uav_home[partner_id]
-                                    dt = self.simulation_step_length
-                                    new_path = [
-                                        [0, partner_home[0], partner_home[1], partner_home[2], 0],
-                                        [t_now, partner_home[0], partner_home[1], partner_home[2], 0],
-                                        [t_now + dt, curr_pos[0], curr_pos[1], curr_pos[2], curr_angle]
-                                    ]
-
-                                    new_path.extend(future)
-
-                                    self.uav_data[str(partner_id)] = new_path
-                                    self.uav_positions_list, self.time_list, self.uav_yaw_angles_list = self.uav_path_data()
-                                    non_blocking_warning("Relevo",
-                                        f"UAV {partner_id} releva a UAV {uav_id}")
+                                    new_path.extend(p for p in original_data if p[0] > t_now)
+                                self.uav_data[str(partner_id)] = new_path
+                                self.uav_positions_list, self.time_list, self.uav_yaw_angles_list = self.uav_path_data()
+                                dt_targets.pop(partner_id, None)
+                                non_blocking_warning("Relevo",
+                                    f"UAV {partner_id} releva a UAV {uav_id}")
                                     
                         if battery_life_steps[str(uav_id)] >= return_threshold and not return_sent[str(uav_id)]:
                             if uav_state[str(uav_id)] == "MISSION":
@@ -866,7 +951,7 @@ class UAVSimulation:
                                     uav_state[str(uid)] in ("MISSION", "RETURNING")
                                     for uid in range(T)
                                 )
-                                if not any_active:
+                                if not any_active and not self.on_demand:
                                     self.stop_flag = True
                             else:
                                 if veh_id in traci.vehicle.getIDList():
