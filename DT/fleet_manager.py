@@ -30,6 +30,13 @@ la pareja esta cargando, puede salir el otro. Durante un relevo por bateria (lo
 decide el plugin) los dos UAVs del puesto pueden estar en el aire a la vez
 unos segundos.
 
+ESTACIONES FIJAS: un gNodeB que no va en un UAV (por ejemplo uno con
+StationaryMobility en OMNeT++) llega en el GNB_Report con un uav_state que no
+es de UAV ("UNKNOWN"). El fleet manager lo trata como cobertura siempre activa:
+los coches que sirve con buena SINR estan cubiertos y no hacen despegar a
+nadie. No ocupa puesto, no se despliega, no se retira y no cuenta para deducir
+las parejas de relevo.
+
 Una vez en mision, el reposicionamiento fino lo sigue haciendo el algoritmo
 del gemelo (centroide, centroide ponderado o k-means): este modulo solo decide
 CUANTOS UAVs vuelan y CUALES.
@@ -84,10 +91,11 @@ DEPLOY_CONFIRM_TIME = 4.0      # s seguidos con demanda antes de despegar (filtr
 DEPLOY_SPEED = 20.0            # m/s (informativo, el plugin usa su modelo)
 DEPLOY_ALTITUDE = 0.0          # m. 0 = la decide el plugin ("Deploy Altitude (m)")
 TRANSIT_FOLLOW_RADIUS = 600.0  # m. Antes de sacar otro UAV se mira si hay uno
-                               # en el aire libre a menos de esta distancia: uno
-                               # que aun va de camino (se mide desde su destino)
-                               # o uno en mision sin UEs. Si lo hay, se le manda
-                               # alli (MOVE) en vez de desplegar otro
+                               # en el aire que pueda encargarse a menos de esta
+                               # distancia: uno que aun va de camino (se mide
+                               # desde su destino) o uno en mision cuyos UEs
+                               # estan todos en ese grupo. Si lo hay, se le
+                               # manda alli (MOVE) en vez de desplegar otro
 ARRIVAL_RADIUS = 100.0         # m. A menos de esto de su destino, el UAV ha llegado
 PENDING_TIMEOUT = 30.0         # s. Si el UAV no pasa a MISSION en este tiempo,
                                # se da la orden por perdida y se puede repetir
@@ -99,8 +107,20 @@ RECALL_GRACE = 60.0            # s tras el despegue en los que no empieza a
                                # contar el tiempo ocioso (al principio aun no
                                # tiene UEs asociados). Minimo para retirar un
                                # UAV: RECALL_GRACE + RECALL_IDLE_TIME
+REDUNDANT_RADIUS = DEPLOY_RADIUS  
+FIXED_REDUNDANT_RADIUS = 150.0   # m. Igual, pero para estaciones fijas
+                                    # (torres a 25 m con UMa: alcanzan menos) # m. Un UE no depende de un UAV si hay otra
+                                   # estacion activa (UAV en mision o fija) a
+                                   # menos de esta distancia. Igual que
+                                   # DEPLOY_RADIUS para que retirada y
+                                   # despliegue no se contradigan
 MIN_ACTIVE_UAVS = 0            # UAVs que se mantienen en el aire aunque esten
                                # ociosos
+
+
+# Estados que publica el plugin para un UAV. Cualquier otro (p. ej. "UNKNOWN",
+# el que manda GnbSender cuando el gNodeB no sigue a un UAV) es una estacion fija
+UAV_STATES = ("MISSION", "RETURNING", "CHARGING", "STANDBY", "ABSENT")
 
 
 class FleetManager:
@@ -166,6 +186,7 @@ class FleetManager:
                 'gnb_index': nd.get('gnb_index'),
                 'x': nd.get('pos_x', 0.0), 'y': nd.get('pos_y', 0.0),
                 'state': nd.get('uav_state', 'UNKNOWN'),
+                'fixed': nd.get('uav_state', 'UNKNOWN') not in UAV_STATES,
             })
         return out
 
@@ -202,6 +223,16 @@ class FleetManager:
             return
         self._last_run = sim_time
         ues = self._ues(sim_time)
+        # Las estaciones fijas solo cuentan como cobertura; todo lo demas
+        # (puestos, despliegues, retiradas) es solo para UAVs
+        fixed = [g for g in gnbs if g['fixed']]
+        gnbs = [g for g in gnbs if not g['fixed']]
+        if len(fixed) != getattr(self, '_fixed_seen', -1):
+            self._fixed_seen = len(fixed)
+            if fixed:
+                print(f"[Fleet] {len(fixed)} estacion(es) fija(s): "
+                      + ", ".join(f"gNodeB[{g['gnb_index']}]" for g in fixed)
+                      + " (cobertura siempre activa)")
         self._detect_fleet_layout(gnbs)
         self._detect_takeoffs(gnbs, sim_time)
         self._refresh_pending(gnbs, sim_time)
@@ -215,11 +246,11 @@ class FleetManager:
         standby = [g for g in gnbs if g['state'] == 'STANDBY'
                    and g['gnb_index'] not in self.pending
                    and self.slot_of(g['gnb_index']) not in busy_slots]
-        active_ids = {g['gnb_id'] for g in active}
+        active_ids = {g['gnb_id'] for g in active} | {g['gnb_id'] for g in fixed}
         self._refresh_transit(gnbs, ues, sim_time)
 
         self._deploy(ues, active, standby, active_ids, sim_time)
-        self._recall(ues, active, sim_time)
+        self._recall(ues, active, fixed, sim_time)
 
     def _detect_takeoffs(self, gnbs, t):
         """Cualquier UAV que pasa a MISSION empieza su periodo de gracia, lo
@@ -395,6 +426,11 @@ class FleetManager:
                 continue
             dist, idx = min(near)
             used.add(idx)
+            # Nuevo encargo: vuelve a estar en camino y empieza otra gracia, para
+            # que no se le retire por ocioso mientras vuela hacia los coches
+            if idx not in self.transit and idx not in self.pending:
+                self.deployed_at[idx] = t
+            self.idle_since.pop(idx, None)
             self.transit[idx] = {'x': c['x'], 'y': c['y']}
             if idx in self.pending:
                 self.pending[idx].update(x=c['x'], y=c['y'])
@@ -407,20 +443,36 @@ class FleetManager:
 
     # -------------------------------------------------------------- retirada
 
-    def _recall(self, ues, active, t):
-        served = defaultdict(int)
+    def _depends_on(self, u, others):
+        """True si el UE u no tiene ninguna otra estacion activa cerca."""
+        for o in others:
+            r = FIXED_REDUNDANT_RADIUS if o.get('fixed') else REDUNDANT_RADIUS
+            if self._dist(u['x'], u['y'], o['x'], o['y']) <= r:
+                return False
+        return True
+    def _recall(self, ues, active, fixed, t):
+        by_master = defaultdict(list)
         for u in ues:
-            served[u['master_id']] += 1
+            by_master[u['master_id']].append(u)
+
+        # Cobertura disponible: UAVs en mision que no van de camino a otro
+        # sitio, y estaciones fijas
+        stations = [g for g in active if g['gnb_index'] not in self.transit] + list(fixed)
 
         n_active = len(active)
-        for g in sorted(active, key=lambda g: served[g['gnb_id']]):
+        # Primero los que sirven a menos UEs
+        for g in sorted(active, key=lambda g: len(by_master[g['gnb_id']])):
             idx = g['gnb_index']
             if idx in self.pending:
                 continue
             if t - self.deployed_at.get(idx, -1e9) < RECALL_GRACE:
                 self.idle_since.pop(idx, None)   # en gracia: no cuenta como ocioso
                 continue
-            if served[g['gnb_id']] > RECALL_MAX_UES:
+            others = [s for s in stations if s['gnb_index'] != idx]
+            mine = by_master[g['gnb_id']]
+            # UEs que solo tienen a este UAV: lo mantienen en el aire
+            exclusive = [u for u in mine if self._depends_on(u, others)]
+            if len(exclusive) > RECALL_MAX_UES:
                 self.idle_since.pop(idx, None)
                 continue
             since = self.idle_since.setdefault(idx, t)
@@ -432,8 +484,13 @@ class FleetManager:
                 self.recalled[idx] = t
                 self.idle_since.pop(idx, None)
                 n_active -= 1
-                self._log(t, 'RECALL', idx)
-                print(f"[Fleet] <<< RECALL gNodeB[{idx}]: {t - since:.0f}s sin UEs")
+                # Ya no cuenta como cobertura para decidir sobre los demas:
+                # asi nunca se retiran a la vez dos UAVs que se cubren entre si
+                stations = [s for s in stations if s['gnb_index'] != idx]
+                self._log(t, 'RECALL', idx, num_ues=len(mine))
+                print(f"[Fleet] <<< RECALL gNodeB[{idx}]: {t - since:.0f}s sin UEs "
+                      f"exclusivos ({len(mine)} UEs, todos con otra estacion a "
+                      f"< {REDUNDANT_RADIUS:.0f} m)")
 
     # ------------------------------------------------------------- registro
 

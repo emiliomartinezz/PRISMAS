@@ -1,13 +1,14 @@
+// Aparcamiento: mientras el UAV esta en uno de los estados de 'parkStates'
+// (por defecto STANDBY y CHARGING, es decir, posado en la base) o cuando
+// desaparece de SUMO, el gNodeB se lleva a (parkX, parkY, parkZ), lejos del
+// escenario. Asi un UAV que no esta en mision no capta coches ni interfiere.
+// La posicion real del UAV se sigue guardando y GnbSender la reporta al
+// gemelo (getUavPosition()).
 //
-// UavFollowerMobility.ned
-// Movilidad del gNodeB embarcado en un UAV de SUMO-UAV-Py.
-//
-// No calcula trayectorias: copia la posicion del UAV "uav<i>" de SUMO.
-//  - x, y: del modulo uav[k] que crea Veins (ya en coordenadas OMNeT++).
-//  - z: SUMO es 2D, asi que el plugin publica la altura como parametro
-//    generico del vehiculo ("altitude", ver plugin_patch) y este modulo la
-//    lee por TraCI una vez por updateInterval. Si el parametro no existe,
-//    usa 'defaultAltitude'.
+// IMPORTANTE: a esa distancia el modelo de canal de Simu5G (UMa) se sale de
+// su rango de validez (5 km). Hay que poner en el .ini
+//     **.tolerateMaxDistViolation = true
+// para que en lugar de dar error aplique una atenuacion enorme (sin senal).
 //
 
 package dronestfg.apps;
@@ -34,6 +35,13 @@ simple UavFollowerMobility extends MovingMobilityBase
         // publish_state(); se incluye en el GNB_Report para el gemelo
         bool readStateFromSumo = default(true);
         string stateParameter = default("uav_state");
+
+        // Aparcamiento de los gNodeBs cuyo UAV no da servicio
+        bool parkInactive = default(true);
+        string parkStates = default("STANDBY CHARGING");   // separados por espacios
+        double parkX @unit(m) = default(-20000m);
+        double parkY @unit(m) = default(650m);
+        double parkZ @unit(m) = default(25m);
 
         // Posicion hasta que el plugin crea el UAV en SUMO
         // (MobilityBase lee initialX/Y/Z automaticamente)

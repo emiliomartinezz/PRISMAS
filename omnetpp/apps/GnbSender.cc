@@ -11,6 +11,13 @@
 //   - El GNB_Report incluye "uav_state" (MISSION, RETURNING, CHARGING,
 //     STANDBY, ABSENT o UNKNOWN) para que el gemelo ignore los UAVs que no
 //     están en misión.
+//
+// Cambios aparcamiento:
+//   - Si el gNodeB va en un UAV, la posición que se reporta es la REAL del
+//     UAV (getUavPosition()), aunque el gNodeB esté aparcado fuera del
+//     escenario. El gemelo la necesita para saber dónde está cada UAV (por
+//     ejemplo, para elegir el más cercano a una zona sin cobertura).
+//   - El GNB_Report incluye "parked" (true/false).
 
 #include "GnbSender.h"
 #include "UavFollowerMobility.h"
@@ -203,10 +210,16 @@ void GnbSender::sendGnbInfo()
     std::vector<int> connectedUes = getConnectedUeIds();
 
     // Estado del UAV que transporta el gNodeB. Sin UavFollowerMobility no hay
-    // estado: "UNKNOWN" (el gemelo lo trata como activo)
+    // estado: "UNKNOWN" (el gemelo lo trata como estacion fija).
+    // Si va en un UAV, se reporta la posicion REAL del UAV, aunque el gNodeB
+    // este aparcado fuera del escenario.
     std::string uavState = "UNKNOWN";
-    if (auto *follower = dynamic_cast<UavFollowerMobility*>(mobility))
+    bool parked = false;
+    if (auto *follower = dynamic_cast<UavFollowerMobility*>(mobility)) {
         uavState = follower->getUavState();
+        pos = follower->getUavPosition();
+        parked = follower->isParked();
+    }
     int numConnected = connectedUes.size();
 
     // Formato JSON
@@ -219,6 +232,7 @@ void GnbSender::sendGnbInfo()
          << "\"gnb_index\":" << gnbIndex << ","
          << "\"sumo_id\":\"" << sumoId << "\","
          << "\"uav_state\":\"" << uavState << "\","
+         << "\"parked\":" << (parked ? "true" : "false") << ","
          << "\"position\":{"
          << "\"x\":" << pos.x << ","
          << "\"y\":" << pos.y << ","
@@ -254,7 +268,7 @@ void GnbSender::sendGnbInfo()
     std::cout << "  Time       : " << std::fixed << std::setprecision(2)
               << simTime() << " s" << std::endl;
     std::cout << "  Position   : (" << (int)pos.x << ", " << (int)pos.y
-              << ", " << (int)pos.z << ") m" << std::endl;
+              << ", " << (int)pos.z << ") m" << (parked ? "  [gNodeB aparcado]" : "") << std::endl;
     std::cout << "  UAV state  : " << uavState << std::endl;
     std::cout << "  Connected  : " << numConnected << " UEs";
 
@@ -270,7 +284,7 @@ void GnbSender::sendGnbInfo()
     std::cout << "└────────────────────────────────────────┘\n" << std::endl;
 
     EV_INFO << "GnbInfo sent: pos(" << pos.x << "," << pos.y << "," << pos.z << ")"
-            << " UEs=" << numConnected << endl;
+            << " UEs=" << numConnected << (parked ? " (aparcado)" : "") << endl;
 }
 
 void GnbSender::handleStartOperation(LifecycleOperation *operation)

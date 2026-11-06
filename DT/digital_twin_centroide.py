@@ -418,7 +418,7 @@ OPTIMIZATION_INTERVAL = 10.0        # Segundos de simulacion entre optimizacione
 OPTIMIZATION_MIN_DISTANCE = 50.0    # Distancia minima (m) para enviar MOVE
 # Estados del UAV (campo "uav_state" del GNB_Report) que lo excluyen de los
 # calculos. MISSION, UNKNOWN o sin campo (versiones antiguas) cuentan como activos
-INACTIVE_UAV_STATES = ("RETURNING", "CHARGING", "STANDBY", "ABSENT")
+INACTIVE_UAV_STATES = ("RETURNING", "CHARGING", "STANDBY", "ABSENT", "UNKNOWN")
 OPTIMIZATION_SPEED = 20.0          # Velocidad de vuelo del dron (m/s)
 UE_TTL = 5.0                       #TTL de UEs que dejan de reportar
 OPTIMIZATION_MIN_UES = 1            # Minimo de UEs servidos para optimizar

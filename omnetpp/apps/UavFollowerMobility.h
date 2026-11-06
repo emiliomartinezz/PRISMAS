@@ -1,6 +1,7 @@
 #ifndef __DRONESTFG_UAVFOLLOWERMOBILITY_H_
 #define __DRONESTFG_UAVFOLLOWERMOBILITY_H_
 
+#include <set>
 #include <string>
 #include "inet/mobility/base/MovingMobilityBase.h"
 
@@ -25,8 +26,13 @@ namespace veins { class TraCIScenarioManager; }
  *    ahi una peticion la intercala con la de Veins y rompe el protocolo.
  *    handleSelfMessage() es un evento aparte, asi que ahi es seguro.
  *
- * Si el UAV no existe (aun no creado, o eliminado por falta de bateria),
- * el gNodeB se queda en su ultima posicion.
+ * Aparcamiento: si el UAV esta en uno de los estados de 'parkStates'
+ * (STANDBY, CHARGING) o ha desaparecido de SUMO, el gNodeB se coloca en la
+ * posicion de aparcamiento, lejos del escenario, para que no capte coches ni
+ * interfiera. La posicion real del UAV se guarda aparte (getUavPosition()).
+ *
+ * Antes de que el UAV aparezca por primera vez en SUMO, el gNodeB se queda en
+ * su posicion inicial (initialX/Y/Z).
  */
 class UavFollowerMobility : public inet::MovingMobilityBase
 {
@@ -46,6 +52,16 @@ class UavFollowerMobility : public inet::MovingMobilityBase
     std::string stateParameter;
     std::string uavState = "UNKNOWN";
 
+    // Aparcamiento
+    bool parkInactive = true;
+    std::set<std::string> parkStates;
+    inet::Coord parkPosition;
+    bool parked = false;
+
+    // Posicion real del UAV en el escenario (aunque el gNodeB este aparcado)
+    inet::Coord uavPosition;
+    bool hasUavPosition = false;
+
   protected:
     virtual int numInitStages() const override { return inet::NUM_INIT_STAGES; }
     virtual void initialize(int stage) override;
@@ -53,14 +69,18 @@ class UavFollowerMobility : public inet::MovingMobilityBase
     virtual void move() override;
     void readAltitude();
     void readState();
+    void setParked(bool park);
 
   public:
     const std::string& getSumoId() const { return sumoId; }
     bool isPresentInSumo() const { return presentInSumo; }
+    bool isParked() const { return parked; }
     // "ABSENT" si el UAV no esta en SUMO; "UNKNOWN" si el plugin no publica el estado
     std::string getUavState() const { return presentInSumo ? uavState : "ABSENT"; }
+    // Posicion real del UAV (la de SUMO), aunque el gNodeB este aparcado.
+    // Si aun no se conoce, la posicion actual del gNodeB.
+    inet::Coord getUavPosition() { return hasUavPosition ? uavPosition : getCurrentPosition(); }
 };
 
 #endif
-
 

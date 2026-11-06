@@ -5,6 +5,7 @@
 #include "UavFollowerMobility.h"
 
 #include <iostream>
+#include <sstream>
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
@@ -23,6 +24,14 @@ void UavFollowerMobility::initialize(int stage)
         readStateFromSumo = par("readStateFromSumo").boolValue();
         stateParameter = par("stateParameter").stdstringValue();
 
+        parkInactive = par("parkInactive").boolValue();
+        std::istringstream states(par("parkStates").stdstringValue());
+        for (std::string s; states >> s; )
+            parkStates.insert(s);
+        parkPosition = inet::Coord(par("parkX").doubleValue(),
+                                   par("parkY").doubleValue(),
+                                   par("parkZ").doubleValue());
+
         sumoId = par("sumoId").stdstringValue();
         if (sumoId.empty()) {
             cModule *host = getParentModule();   // gNodeB[i]
@@ -39,10 +48,17 @@ void UavFollowerMobility::initialize(int stage)
             throw cRuntimeError("UavFollowerMobility: no hay un TraCIScenarioManager llamado '%s' en la red",
                                 mgrName);
 
+        // Visibles en el inspector de Qtenv
+        WATCH(uavState);
+        WATCH(presentInSumo);
+        WATCH(currentAltitude);
+        WATCH(parked);
+
         std::cout << "[UavFollowerMobility] " << getParentModule()->getFullName()
                   << " seguira al vehiculo SUMO '" << sumoId << "'"
                   << (readAltitudeFromSumo ? " (altura: parametro TraCI '" + altitudeParameter + "')"
                                            : " (altura fija)")
+                  << (parkInactive ? "; se aparca si el UAV no esta en mision" : "")
                   << std::endl;
     }
 }
@@ -109,6 +125,21 @@ void UavFollowerMobility::readState()
     uavState = value;
 }
 
+void UavFollowerMobility::setParked(bool park)
+{
+    if (park) {
+        lastPosition = parkPosition;
+        lastVelocity = inet::Coord::ZERO;
+    }
+    if (park == parked)
+        return;
+    parked = park;
+    std::cout << "[UavFollowerMobility] " << getParentModule()->getFullName()
+              << (park ? " aparcado" : " desaparcado")
+              << " ('" << sumoId << "' en " << getUavState() << ") en t=" << simTime() << "s"
+              << std::endl;
+}
+
 void UavFollowerMobility::move()
 {
     // Mapa id SUMO -> modulo gestionado por Veins
@@ -120,10 +151,15 @@ void UavFollowerMobility::move()
         if (presentInSumo) {
             std::cout << "[UavFollowerMobility] '" << sumoId << "' ha desaparecido de SUMO en t="
                       << simTime() << "s; " << getParentModule()->getFullName()
-                      << " se queda en la ultima posicion" << std::endl;
+                      << (parkInactive ? " se aparca" : " se queda en la ultima posicion")
+                      << std::endl;
         }
         presentInSumo = false;
         lastVelocity = inet::Coord::ZERO;
+        // Si el UAV ya existio y se ha ido, se aparca. Si aun no ha aparecido
+        // nunca, el gNodeB se queda en su posicion inicial.
+        if (parkInactive && hasUavPosition)
+            setParked(true);
         return;
     }
 
@@ -139,9 +175,18 @@ void UavFollowerMobility::move()
                   << ") en t=" << simTime() << "s" << std::endl;
     }
 
+    // Posicion real del UAV: se guarda siempre, este o no aparcado el gNodeB
     const inet::Coord& p = src->getCurrentPosition();
-    lastPosition = inet::Coord(p.x, p.y, currentAltitude);
+    uavPosition = inet::Coord(p.x, p.y, currentAltitude);
+    hasUavPosition = true;
 
+    if (parkInactive && parkStates.count(uavState) > 0) {
+        setParked(true);
+        return;
+    }
+
+    setParked(false);
+    lastPosition = uavPosition;
     lastVelocity = src->getCurrentVelocity();
     lastVelocity.z = 0;
 }

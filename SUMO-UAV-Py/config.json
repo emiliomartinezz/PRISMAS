@@ -9,7 +9,7 @@
     "Veins Margin (m)":250,
     "On Demand Mode": true,
     "Deploy Altitude": 100,
-    "Optimization Mode": false,
+    "Optimization Mode": true,
     "Relay Mode": true,
     "Wind Mode": false,
     "Wind Speed (m/s)": 5,
